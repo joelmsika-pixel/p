@@ -146,19 +146,115 @@ onBeforeUnmount(() => {
       </button>
     </header>
     <nav
-      class="fixed bottom-0 left-0 right-0 z-30 hidden min-h-16 items-stretch gap-1 overflow-x-auto border-t border-[rgba(143,177,225,0.18)] bg-[rgba(7,16,31,0.97)] px-2 py-[6px] pb-[calc(6px+env(safe-area-inset-bottom))] backdrop-blur-[18px] [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden max-[640px]:flex"
+      class="fixed bottom-[calc(14px+env(safe-area-inset-bottom))] left-1/2 z-30 hidden w-max max-w-[calc(100vw-24px)] -translate-x-1/2 items-center justify-center gap-0.5 overflow-x-auto rounded-full border border-[rgba(143,177,225,0.18)] bg-[rgba(7,16,31,0.92)] p-1.5 shadow-[0_12px_36px_rgba(0,0,0,0.32)] backdrop-blur-[18px] [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden max-[640px]:flex max-[360px]:gap-0 max-[360px]:p-1"
       aria-label="Mobile navigation"
     >
       <RouterLink
         v-for="link in navigationLinks"
         :key="link.id"
         :to="`/#${link.id}`"
-        class="flex min-w-[62px] flex-[1_0_auto] flex-col items-center justify-center gap-1.5 rounded-[10px] px-2.5 py-2 font-code text-[10px] font-medium leading-none text-[#a7b5ca] no-underline transition-colors duration-200 hover:text-[#75b2ff] max-[640px]:whitespace-nowrap"
+        class="flex shrink-0 flex-col items-center justify-center gap-1 rounded-xl px-1 py-1.5 font-code text-[8px] leading-none text-[#a7b5ca] no-underline transition-colors duration-200 hover:text-[#75b2ff] max-[360px]:gap-0.5 max-[360px]:px-0.5 max-[360px]:text-[7px]"
         :class="{ 'bg-[rgba(62,132,220,0.12)] text-[#75b2ff]': activeSection === link.id }"
+        :aria-label="link.label"
+        :title="link.label"
         :aria-current="activeSection === link.id ? 'page' : undefined"
       >
-        <span class="size-[5px] rounded-full bg-current opacity-70" aria-hidden="true"></span>
-        <span>{{ link.label }}</span>
+        <svg
+          v-if="link.id === 'home'"
+          class="size-5 max-[360px]:size-[18px]"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10Z" />
+        </svg>
+        <svg
+          v-else-if="link.id === 'me'"
+          class="size-5 max-[360px]:size-[18px]"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="8" r="3.5" />
+          <path d="M5 21a7 7 0 0 1 14 0" />
+        </svg>
+        <svg
+          v-else-if="link.id === 'my-skills'"
+          class="size-5 max-[360px]:size-[18px]"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="m8 8-4 4 4 4m8-8 4 4-4 4m-3-10-2 12" />
+        </svg>
+        <svg
+          v-else-if="link.id === 'projects'"
+          class="size-5 max-[360px]:size-[18px]"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" />
+        </svg>
+        <svg
+          v-else-if="link.id === 'testimonials'"
+          class="size-5 max-[360px]:size-[18px]"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M4 5h16v12h-8l-5 4v-4H4V5Z" />
+          <path d="M8 9h3m-3 4h8" />
+        </svg>
+        <svg
+          v-else-if="link.id === 'rewards'"
+          class="size-5 max-[360px]:size-[18px]"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="8" r="5" />
+          <path d="m8.5 12-1 9 4.5-2.5 4.5 2.5-1-9M12 5.5l.8 1.6 1.7.2-1.2 1.2.3 1.7-1.6-.8-1.6.8.3-1.7-1.2-1.2 1.7-.2L12 5.5Z" />
+        </svg>
+        <svg
+          v-else
+          class="size-5 max-[360px]:size-[18px]"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <rect x="3" y="5" width="18" height="14" rx="2" />
+          <path d="m4 7 8 6 8-6" />
+        </svg>
+        <span class="whitespace-nowrap">{{ link.label }}</span>
       </RouterLink>
     </nav>
     <RouterView />
