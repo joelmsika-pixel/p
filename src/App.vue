@@ -10,8 +10,15 @@ const navigationLinks = sectionIds.map((id) => ({
 }))
 const activeSection = ref('home')
 const headerVisible = ref(true)
+const theme = ref(localStorage.getItem('portfolio-theme') === 'light' ? 'light' : 'dark')
 let scrollFrame = 0
 let lastScrollY = 0
+
+function toggleTheme() {
+  theme.value = theme.value === 'dark' ? 'light' : 'dark'
+  localStorage.setItem('portfolio-theme', theme.value)
+  document.documentElement.dataset.theme = theme.value
+}
 
 function updateActiveSection() {
   scrollFrame = 0
@@ -62,6 +69,7 @@ watch(
 )
 
 onMounted(() => {
+  document.documentElement.dataset.theme = theme.value
   lastScrollY = window.scrollY
   window.addEventListener('scroll', handleScroll, { passive: true })
   nextTick(scheduleActiveSectionUpdate)
@@ -101,6 +109,15 @@ onBeforeUnmount(() => {
           :aria-current="activeSection === link.id ? 'page' : undefined"
         >{{ link.label }}</RouterLink>
       </nav>
+      <button
+        class="ml-5 inline-flex min-h-10 items-center justify-center rounded-lg border border-[rgba(86,157,255,0.4)] bg-[rgba(62,132,220,0.1)] px-3 font-code text-xs font-medium text-[#75b2ff] transition-colors hover:bg-[rgba(62,132,220,0.18)] max-[900px]:ml-3 max-[900px]:px-2.5"
+        type="button"
+        :aria-label="`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`"
+        :title="`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`"
+        @click="toggleTheme"
+      >
+        {{ theme === 'dark' ? 'Light theme' : 'Dark theme' }}
+      </button>
     </header>
     <nav
       class="fixed bottom-0 left-0 right-0 z-30 hidden min-h-16 items-stretch gap-1 overflow-x-auto border-t border-[rgba(143,177,225,0.18)] bg-[rgba(7,16,31,0.97)] px-2 py-[6px] pb-[calc(6px+env(safe-area-inset-bottom))] backdrop-blur-[18px] [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden max-[640px]:flex"
