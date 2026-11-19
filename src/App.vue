@@ -110,7 +110,7 @@ onBeforeUnmount(() => {
         >{{ link.label }}</RouterLink>
       </nav>
       <button
-        class="ml-5 grid size-10 shrink-0 place-items-center rounded-lg border border-[rgba(86,157,255,0.4)] bg-[rgba(62,132,220,0.1)] p-2 text-[#75b2ff] transition-colors hover:bg-[rgba(62,132,220,0.18)] max-[900px]:ml-3"
+        class="ml-5 grid size-10 shrink-0 place-items-center rounded-full p-2 text-[#75b2ff] transition-colors hover:text-[#82aaff] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#75b2ff] max-[900px]:ml-3"
         type="button"
         :aria-label="`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`"
         :title="`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`"
