@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+@import "./portfolio.css";
+
+@theme {
+  --font-code: "Fira Code", monospace;
+}
+
+@layer base {
+  html,
+  body,
+  #app {
+    min-width: 320px;
+    min-height: 100%;
+    margin: 0;
+    background: #07101f;
+  }
+
+  body {
+    min-height: 100vh;
+    color: #f4f7ff;
+    font-family: var(--font-code);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}

@@ -1,0 +1,36 @@
+<template>
+  <section
+    id="my-skills"
+    class="section-alt-surface relative scroll-mt-6 px-[clamp(24px,8.3vw,132px)] py-[clamp(88px,12vw,150px)] max-[640px]:px-6 max-[640px]:py-[82px]"
+    aria-labelledby="skills-title"
+  >
+    <div class="mx-auto w-full max-w-[1120px]">
+      <span class="mb-6 block w-fit rounded-[6px] border border-[rgba(110,154,209,0.2)] bg-[rgba(12,27,47,0.78)] px-[11px] py-2 font-code text-[10px] font-medium leading-none tracking-[.05em] text-[#72b4ff]">skills.json</span>
+      <p class="mb-[22px] flex items-center gap-[11px] font-code text-[11px] font-semibold leading-none tracking-[.13em] text-[#9eb4d3]">
+        <span class="size-[7px] rounded-full bg-[#55a1ff] shadow-[0_0_16px_rgba(85,161,255,0.85)]"></span>
+        03 — WHAT I DO
+      </p>
+      <h2 id="skills-title" class="m-0 text-[clamp(32px,4.5vw,52px)] font-semibold leading-[1.08] tracking-[-.055em] text-[#f4f7ff]"><span class="font-normal text-[#5b708d]" aria-hidden="true">// </span>My skills</h2>
+      <div class="mt-12 grid grid-cols-3 gap-[18px] max-[900px]:grid-cols-2 max-[640px]:mt-[34px] max-[640px]:grid-cols-1 max-[640px]:gap-[14px]">
+        <article class="info-card relative min-w-0 min-h-[230px] overflow-hidden rounded-[9px] border border-[rgba(114,151,196,0.2)] bg-[rgba(8,19,34,0.86)] p-[22px] shadow-[0_16px_38px_rgba(0,0,0,0.16)] max-[640px]:min-h-0">
+          <span class="-mx-[22px] -mt-[22px] mb-[22px] block border-b border-[rgba(114,151,196,0.15)] bg-[rgba(18,34,55,0.65)] px-4 py-[11px] font-code text-[10px] font-medium leading-none text-[#75b2ff]">skill.js</span>
+          <span class="block font-code text-[10px] font-semibold leading-[1.4] tracking-[.17em] text-[#70adff]">01</span>
+          <h3 class="mb-[10px] mt-[27px] font-code text-[17px] font-semibold leading-[1.3] text-[#eaf1fc]">Stack Development</h3>
+          <p class="m-0 font-code text-xs leading-[1.75] text-[#a1b1c8]">Add the technologies and development strengths you want to highlight.</p>
+        </article>
+        <article class="info-card relative min-w-0 min-h-[230px] overflow-hidden rounded-[9px] border border-[rgba(114,151,196,0.2)] bg-[rgba(8,19,34,0.86)] p-[22px] shadow-[0_16px_38px_rgba(0,0,0,0.16)] max-[640px]:min-h-0">
+          <span class="-mx-[22px] -mt-[22px] mb-[22px] block border-b border-[rgba(114,151,196,0.15)] bg-[rgba(18,34,55,0.65)] px-4 py-[11px] font-code text-[10px] font-medium leading-none text-[#75b2ff]">architecture.yml</span>
+          <span class="block font-code text-[10px] font-semibold leading-[1.4] tracking-[.17em] text-[#70adff]">02</span>
+          <h3 class="mb-[10px] mt-[27px] font-code text-[17px] font-semibold leading-[1.3] text-[#eaf1fc]">System Design &amp; Architecture</h3>
+          <p class="m-0 font-code text-xs leading-[1.75] text-[#a1b1c8]">Add the architecture areas, methods, or systems you work with.</p>
+        </article>
+        <article class="info-card relative min-w-0 min-h-[230px] overflow-hidden rounded-[9px] border border-[rgba(114,151,196,0.2)] bg-[rgba(8,19,34,0.86)] p-[22px] shadow-[0_16px_38px_rgba(0,0,0,0.16)] max-[640px]:min-h-0">
+          <span class="-mx-[22px] -mt-[22px] mb-[22px] block border-b border-[rgba(114,151,196,0.15)] bg-[rgba(18,34,55,0.65)] px-4 py-[11px] font-code text-[10px] font-medium leading-none text-[#75b2ff]">reverse-engineering.py</span>
+          <span class="block font-code text-[10px] font-semibold leading-[1.4] tracking-[.17em] text-[#70adff]">03</span>
+          <h3 class="mb-[10px] mt-[27px] font-code text-[17px] font-semibold leading-[1.3] text-[#eaf1fc]">Reverse Engineering</h3>
+          <p class="m-0 font-code text-xs leading-[1.75] text-[#a1b1c8]">Add details about the tools and techniques you use in this area.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+</template>
