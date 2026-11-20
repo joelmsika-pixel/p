@@ -113,7 +113,7 @@ const projects = [
     id: 5,
     category: 'MONEY SAVINGS',
     title: 'eKikoba Platform',
-    description: 'A money savings platform currently in development.',
+    description: 'Currently in development.',
     skills: [
       { name: 'Vue.js', icon: siVuedotjs },
       { name: 'Tailwind CSS', icon: siTailwindcss },
