@@ -24,6 +24,7 @@ import biashara3 from '../assets/B3.jpg'
 import biashara4 from '../assets/B4.jpg'
 import ek1 from '../assets/ek1.png'
 import ek2 from '../assets/ek2.png'
+import kigomaScreenshot from '../assets/file_00000000ea5081f4ae92442ed3bee787.png'
 
 const ecommerceSlides = [
   { src: eshop1, alt: 'Eshop homepage screenshot' },
@@ -61,6 +62,10 @@ const projects = [
     category: 'E-COMMERCE',
     title: 'E-commerce Website',
     description: 'Created using the Webyetu CMS platform.',
+    skills: [
+      { name: 'Google Analytics', icon: siGoogleanalytics },
+      { name: 'Google Search Console', icon: siGooglesearchconsole },
+    ],
     slides: ecommerceSlides,
     link: 'https://eshop.co.tz',
     linkLabel: 'Visit Eshop.co.tz',
@@ -123,6 +128,20 @@ const projects = [
     link: 'https://ekikoba-mjp5.vercel.app/',
     linkLabel: 'Visit eKikoba',
   },
+  {
+    id: 6,
+    title: 'Kigoma Secondary School Management System',
+    description: 'Locally used by the school, not available online. Contact them for more proofs.',
+    skills: [
+      { name: 'Vue.js', icon: siVuedotjs },
+      { name: 'Tailwind CSS', icon: siTailwindcss },
+      { name: 'Laravel', icon: siLaravel },
+    ],
+    image: {
+      src: kigomaScreenshot,
+      alt: 'Kigoma Secondary School Management System screenshot',
+    },
+  },
 ]
 
 const activeSlides = ref(Object.fromEntries(projects.map(({ id }) => [id, 0])))
@@ -136,7 +155,7 @@ const slideshowTimers = new Map()
 const transitionResetFrames = new Map()
 const swipeStartX = new Map()
 
-const loopedProjectSlides = Object.fromEntries(projects.map(({ id, slides }) => [
+const loopedProjectSlides = Object.fromEntries(projects.filter(({ slides }) => slides).map(({ id, slides }) => [
   id,
   [slides[slides.length - 1], ...slides, slides[0]],
 ]))
@@ -346,6 +365,15 @@ onBeforeUnmount(() => {
               </svg>
             </button>
           </div>
+          <div v-else-if="project.image" class="relative aspect-[2.23/1] overflow-hidden bg-[#101b2b]">
+            <img
+              :src="project.image.src"
+              :alt="project.image.alt"
+              class="project-slideshow-image"
+              loading="eager"
+              draggable="false"
+            />
+          </div>
           <div v-else class="project-art relative grid aspect-[2.23/1] place-items-center overflow-hidden" aria-hidden="true">
             <span class="absolute left-4 top-4 font-code text-[10px] tracking-wide text-[rgba(143,166,192,0.7)]">{{ project.file }}</span>
             <span class="font-code text-[42px] font-semibold leading-none tracking-[-.1em] text-[rgba(143,166,192,0.58)]">&lt;/&gt;</span>
@@ -365,7 +393,7 @@ onBeforeUnmount(() => {
                   @click="setActiveSlide(project.id, index)"
                 ></button>
               </div>
-              <span v-else class="project-category">{{ project.category }}</span>
+              <span v-else-if="project.category" class="project-category">{{ project.category }}</span>
             </div>
             <h3 class="project-title">{{ project.title }}</h3>
             <p class="project-description">{{ project.description }}</p>
