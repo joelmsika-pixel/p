@@ -308,3 +308,30 @@ html[data-theme="light"] .skills-chip {
 html[data-theme="light"] .skills-brand-icon--contrast {
   color: #171717;
 }
+
+.project-slide-enter-active,
+.project-slide-leave-active {
+  transition: opacity .32s ease;
+}
+
+.project-slide-enter-from,
+.project-slide-leave-to {
+  opacity: 0;
+}
+
+html[data-theme="light"] .project-slide-control {
+  border-color: #05080d;
+  background: #05080d;
+  color: #fff;
+}
+
+html[data-theme="light"] .project-slide-control:hover {
+  background: #1a2533;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-slide-enter-active,
+  .project-slide-leave-active {
+    transition: none;
+  }
+}
