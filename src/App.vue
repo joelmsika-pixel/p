@@ -7,6 +7,11 @@ const sectionIds = ['home', 'me', 'my-skills', 'projects', 'testimonials', 'rewa
 const navigationLinks = sectionIds.map((id) => ({
   id,
   label: id === 'my-skills' ? 'My Skills' : id.charAt(0).toUpperCase() + id.slice(1),
+  mobileLabel: {
+    'my-skills': 'Skills',
+    testimonials: 'Testim.',
+    rewards: 'Rewards',
+  }[id] ?? (id.charAt(0).toUpperCase() + id.slice(1)),
 }))
 const activeSection = ref('home')
 const headerVisible = ref(true)
@@ -82,7 +87,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="min-h-screen pt-24 max-[640px]:pt-[68px] max-[640px]:pb-[calc(96px+env(safe-area-inset-bottom))] max-[520px]:pb-[calc(160px+env(safe-area-inset-bottom))]">
+  <div class="min-h-screen pt-24 max-[640px]:pt-[68px] max-[640px]:pb-[calc(76px+env(safe-area-inset-bottom))]">
     <header
       class="fixed left-0 top-0 z-20 flex min-h-24 w-full -translate-y-[110%] items-center justify-between border-b border-[rgba(176,202,241,0.14)] bg-[rgba(7,16,31,0.96)] px-[clamp(24px,8.3vw,132px)] backdrop-blur-[16px] transition-transform duration-[280ms] ease-in-out motion-reduce:transition-none max-[640px]:min-h-[68px] max-[640px]:px-5"
       :class="{ 'translate-y-0': headerVisible }"
@@ -146,14 +151,14 @@ onBeforeUnmount(() => {
       </button>
     </header>
     <nav
-      class="fixed bottom-0 left-0 z-30 hidden w-full grid-cols-7 items-stretch gap-1 border-t border-[rgba(143,177,225,0.18)] bg-[rgba(7,16,31,0.98)] px-2 pt-2 pb-[calc(8px+env(safe-area-inset-bottom))] shadow-[0_-8px_24px_rgba(0,0,0,0.2)] backdrop-blur-[18px] max-[640px]:grid max-[520px]:grid-cols-4"
+      class="fixed bottom-0 left-0 z-30 hidden w-full grid-cols-7 items-stretch gap-1 border-t border-[rgba(143,177,225,0.18)] bg-[rgba(7,16,31,0.98)] px-1 pt-1 pb-[calc(6px+env(safe-area-inset-bottom))] shadow-[0_-8px_24px_rgba(0,0,0,0.2)] backdrop-blur-[18px] max-[640px]:grid"
       aria-label="Mobile navigation"
     >
       <RouterLink
         v-for="link in navigationLinks"
         :key="link.id"
         :to="`/#${link.id}`"
-        class="flex min-h-[68px] flex-col items-center justify-center gap-2 rounded-xl px-1 py-2 font-code text-[10px] leading-none text-[#a7b5ca] no-underline transition-colors duration-200 hover:text-[#75b2ff] max-[520px]:min-h-[64px]"
+        class="flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl py-1 font-code text-[8px] leading-none text-[#a7b5ca] no-underline transition-colors duration-200 hover:text-[#75b2ff]"
         :class="{ 'bg-[rgba(62,132,220,0.12)] text-[#75b2ff]': activeSection === link.id }"
         :aria-label="link.label"
         :title="link.label"
@@ -161,7 +166,7 @@ onBeforeUnmount(() => {
       >
         <svg
           v-if="link.id === 'home'"
-          class="size-7"
+          class="size-[26px]"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -174,7 +179,7 @@ onBeforeUnmount(() => {
         </svg>
         <svg
           v-else-if="link.id === 'me'"
-          class="size-7"
+          class="size-[26px]"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -188,7 +193,7 @@ onBeforeUnmount(() => {
         </svg>
         <svg
           v-else-if="link.id === 'my-skills'"
-          class="size-7"
+          class="size-[26px]"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -201,7 +206,7 @@ onBeforeUnmount(() => {
         </svg>
         <svg
           v-else-if="link.id === 'projects'"
-          class="size-7"
+          class="size-[26px]"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -214,7 +219,7 @@ onBeforeUnmount(() => {
         </svg>
         <svg
           v-else-if="link.id === 'testimonials'"
-          class="size-7"
+          class="size-[26px]"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -228,7 +233,7 @@ onBeforeUnmount(() => {
         </svg>
         <svg
           v-else-if="link.id === 'rewards'"
-          class="size-7"
+          class="size-[26px]"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -242,7 +247,7 @@ onBeforeUnmount(() => {
         </svg>
         <svg
           v-else
-          class="size-7"
+          class="size-[26px]"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -254,7 +259,7 @@ onBeforeUnmount(() => {
           <rect x="3" y="5" width="18" height="14" rx="2" />
           <path d="m4 7 8 6 8-6" />
         </svg>
-        <span class="whitespace-nowrap">{{ link.label }}</span>
+        <span class="whitespace-nowrap">{{ link.mobileLabel }}</span>
       </RouterLink>
     </nav>
     <RouterView />
