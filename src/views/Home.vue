@@ -10,7 +10,7 @@ import Contact from './Contact.vue'
 <template>
   <main class="min-h-screen bg-[#07101f]">
     <section id="home" class="relative isolate flex min-h-[calc(100svh-96px)] flex-col overflow-hidden bg-[#07101f] px-[clamp(24px,8.3vw,132px)] max-[640px]:min-h-[calc(100svh-68px)] max-[640px]:px-6" aria-labelledby="hero-title">
-      <div class="hero-mesh pointer-events-none absolute right-[-80px] top-1/2 z-0 aspect-square w-[min(82vw,880px)] -translate-y-1/2 rounded-full opacity-[.6] max-[640px]:right-[-100px] max-[640px]:top-[30%] max-[640px]:w-[440px] max-[640px]:translate-y-0 max-[640px]:opacity-[.68]" aria-hidden="true">
+      <div class="hero-mesh pointer-events-none absolute right-[-80px] top-1/2 z-0 aspect-square w-[min(82vw,880px)] -translate-y-1/2 rounded-full opacity-[.6] max-[640px]:right-[-120px] max-[640px]:top-[30%] max-[640px]:w-[min(150vw,760px)] max-[640px]:translate-y-0 max-[640px]:opacity-[.68]" aria-hidden="true">
         <div class="hero-mesh-dots">
           <span v-for="dot in 625" :key="dot" class="hero-mesh-dot"></span>
         </div>
