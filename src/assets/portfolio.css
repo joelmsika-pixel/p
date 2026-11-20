@@ -17,15 +17,7 @@
   width: 3px;
   height: 3px;
   border-radius: 50%;
-  background-color: rgba(175, 184, 190, .56);
-}
-
-.hero-mesh-dot:nth-child(7n) {
-  background-color: rgba(161, 185, 164, .72);
-}
-
-.hero-mesh-dot:nth-child(11n) {
-  background-color: rgba(112, 148, 189, .72);
+  background-color: #c5e3c9;
 }
 
 .hero-mesh-dot:nth-child(50n + 26) {
@@ -89,15 +81,7 @@ html[data-theme="light"] .section-alt-surface {
 }
 
 html[data-theme="light"] .hero-mesh-dot {
-  background-color: rgba(97, 112, 123, .32);
-}
-
-html[data-theme="light"] .hero-mesh-dot:nth-child(7n) {
-  background-color: rgba(93, 132, 101, .42);
-}
-
-html[data-theme="light"] .hero-mesh-dot:nth-child(11n) {
-  background-color: rgba(73, 107, 148, .42);
+  background-color: rgba(95, 133, 101, .62);
 }
 
 html[data-theme="light"] .hero-overlay {
