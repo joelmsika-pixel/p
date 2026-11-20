@@ -83,7 +83,7 @@ function getSocialIconColor(social) {
           </p>
         </div>
       </div>
-      <figure class="about-portrait relative mx-auto w-full max-w-[300px] overflow-hidden rounded-[18px] border border-[rgba(143,166,192,0.3)] p-2 shadow-[0_24px_60px_rgba(0,0,0,0.24)]">
+      <figure class="about-portrait relative mx-auto w-full max-w-[300px] overflow-hidden rounded-[18px] border border-[rgba(143,166,192,0.3)] p-2 shadow-[0_6px_16px_rgba(0,0,0,0.08)]">
         <div class="about-portrait-image relative aspect-[4/5] overflow-hidden rounded-[12px]">
           <img
             class="absolute inset-0 size-full object-cover object-[center_18%]"
