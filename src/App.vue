@@ -99,23 +99,23 @@ onBeforeUnmount(() => {
         aria-label="Portfolio home"
       >
         <span
-          class="grid size-[34px] place-items-center rounded-[10px] border border-[rgba(86,157,255,0.55)] font-code text-xs font-semibold tracking-[-.08em] text-[#69aaff]"
+          class="grid size-[34px] place-items-center rounded-[10px] border border-[rgba(143,166,192,0.35)] font-code text-xs font-semibold tracking-[-.08em] text-[#91a8c0]"
           aria-hidden="true"
-        >&lt;/&gt;</span>
-        <span>PORTFOLIO</span>
+        >JM</span>
+        <span>JOEL MSIKA</span>
       </RouterLink>
       <nav class="flex items-center gap-[clamp(14px,2vw,29px)] max-[640px]:hidden" aria-label="Main navigation">
         <RouterLink
           v-for="link in navigationLinks"
           :key="link.id"
           :to="`/#${link.id}`"
-          class="font-code text-xs font-medium leading-none text-[#a7b5ca] no-underline transition-colors duration-200 hover:text-[#75b2ff]"
-          :class="{ 'text-[#75b2ff]': activeSection === link.id }"
+          class="font-code text-xs font-medium leading-none text-[#a7b5ca] no-underline transition-colors duration-200 hover:text-[#91a8c0]"
+          :class="{ 'text-[#91a8c0]': activeSection === link.id }"
           :aria-current="activeSection === link.id ? 'page' : undefined"
         >{{ link.label }}</RouterLink>
       </nav>
       <button
-        class="ml-5 grid size-10 shrink-0 place-items-center rounded-full p-2 text-[#75b2ff] transition-colors hover:text-[#82aaff] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#75b2ff] max-[900px]:ml-3"
+        class="ml-5 grid size-10 shrink-0 place-items-center rounded-full p-2 text-[#91a8c0] transition-colors hover:text-[#a3b5c9] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#91a8c0] max-[900px]:ml-3"
         type="button"
         :aria-label="`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`"
         :title="`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`"
@@ -151,15 +151,15 @@ onBeforeUnmount(() => {
       </button>
     </header>
     <nav
-      class="fixed bottom-0 left-0 z-30 hidden w-full grid-cols-7 items-stretch gap-1 border-t border-[rgba(143,177,225,0.18)] bg-[rgba(7,16,31,0.98)] px-1 pt-1 pb-[calc(6px+env(safe-area-inset-bottom))] shadow-[0_-8px_24px_rgba(0,0,0,0.2)] backdrop-blur-[18px] max-[640px]:grid"
+      class="mobile-navigation fixed bottom-0 left-0 z-30 hidden w-full grid-cols-7 items-stretch gap-1 border-t border-[rgba(143,177,225,0.18)] bg-[rgba(7,16,31,0.98)] px-1 pt-1 pb-[calc(6px+env(safe-area-inset-bottom))] shadow-[0_-8px_24px_rgba(0,0,0,0.2)] backdrop-blur-[18px] max-[640px]:grid"
       aria-label="Mobile navigation"
     >
       <RouterLink
         v-for="link in navigationLinks"
         :key="link.id"
         :to="`/#${link.id}`"
-        class="flex min-h-[76px] flex-col items-center justify-center gap-1 rounded-xl py-1 font-code text-[8px] leading-none text-[#a7b5ca] no-underline transition-colors duration-200 hover:text-[#75b2ff]"
-        :class="{ 'bg-[rgba(62,132,220,0.12)] text-[#75b2ff]': activeSection === link.id }"
+        class="flex min-h-[76px] flex-col items-center justify-center gap-1 rounded-xl py-1 font-code text-[8px] leading-none text-[#a7b5ca] no-underline transition-colors duration-200 hover:text-[#91a8c0]"
+        :class="{ 'text-[#7094bd]': activeSection === link.id }"
         :aria-label="link.label"
         :title="link.label"
         :aria-current="activeSection === link.id ? 'page' : undefined"

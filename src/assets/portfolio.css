@@ -17,8 +17,7 @@
   width: 3px;
   height: 3px;
   border-radius: 50%;
-  background-color: rgba(137, 190, 255, .82);
-  box-shadow: 0 0 5px rgba(86, 157, 255, .48);
+  background-color: rgba(151, 170, 191, .48);
 }
 
 .hero-mesh-dot:nth-child(50n + 26) {
@@ -26,30 +25,34 @@
   left: 50%;
 }
 
+.mobile-navigation a[aria-current="page"] svg {
+  color: #7094bd;
+}
+
 .section-surface {
   background:
-    radial-gradient(ellipse at 95% 0%, rgba(37, 91, 157, .09), transparent 38%),
+    radial-gradient(ellipse at 95% 0%, rgba(67, 87, 112, .045), transparent 38%),
     #07101f;
   scroll-margin-top: 24px;
 }
 
 .section-alt-surface {
   background:
-    radial-gradient(ellipse at 5% 100%, rgba(37, 91, 157, .1), transparent 38%),
+    radial-gradient(ellipse at 5% 100%, rgba(67, 87, 112, .05), transparent 38%),
     #0a1629;
   scroll-margin-top: 24px;
 }
 
 .section-contact-surface {
   background:
-    radial-gradient(ellipse at 75% 100%, rgba(30, 94, 174, .16), transparent 55%),
+    radial-gradient(ellipse at 75% 100%, rgba(67, 87, 112, .075), transparent 55%),
     #07101f;
   scroll-margin-top: 24px;
 }
 
 .project-art {
   background:
-    radial-gradient(ellipse at 70% 30%, rgba(52, 126, 223, .36), transparent 55%),
+    radial-gradient(ellipse at 70% 30%, rgba(77, 99, 126, .18), transparent 55%),
     linear-gradient(135deg, #10243f, #0c1628);
 }
 
@@ -67,31 +70,30 @@ html[data-theme="light"] #app {
 html[data-theme="light"] .section-surface,
 html[data-theme="light"] .section-contact-surface {
   background:
-    radial-gradient(ellipse at 95% 0%, rgba(51, 112, 190, .07), transparent 40%),
+    radial-gradient(ellipse at 95% 0%, rgba(83, 106, 132, .04), transparent 40%),
     #f4f7fb;
 }
 
 html[data-theme="light"] .section-alt-surface {
   background:
-    radial-gradient(ellipse at 5% 100%, rgba(51, 112, 190, .08), transparent 40%),
+    radial-gradient(ellipse at 5% 100%, rgba(83, 106, 132, .045), transparent 40%),
     #edf3fa;
 }
 
 html[data-theme="light"] .hero-mesh-dot {
-  background-color: rgba(48, 111, 190, .58);
-  box-shadow: 0 0 5px rgba(48, 111, 190, .22);
+  background-color: rgba(83, 106, 132, .32);
 }
 
 html[data-theme="light"] .hero-overlay {
   background-image:
-    radial-gradient(ellipse at 82% 55%, rgba(74, 139, 210, .08), transparent 49%),
+    radial-gradient(ellipse at 82% 55%, rgba(83, 106, 132, .04), transparent 49%),
     linear-gradient(90deg, rgba(244, 247, 251, .98) 0%, rgba(244, 247, 251, .9) 31%, rgba(244, 247, 251, .66) 57%, rgba(244, 247, 251, .32) 100%),
     linear-gradient(0deg, #f4f7fb 0%, rgba(244, 247, 251, .9) 12%, transparent 32%);
 }
 
 html[data-theme="light"] .project-art {
   background:
-    radial-gradient(ellipse at 70% 30%, rgba(52, 126, 223, .2), transparent 55%),
+    radial-gradient(ellipse at 70% 30%, rgba(83, 106, 132, .1), transparent 55%),
     linear-gradient(135deg, #e5eef9, #dce8f6);
 }
 
@@ -135,15 +137,16 @@ html[data-theme="light"] :is([class~="text-[#8193ad]"], [class~="text-[#5b708d]"
   color: #687990;
 }
 
-html[data-theme="light"] :is(
-  [class~="text-[#72b4ff]"],
-  [class~="text-[#75b2ff]"],
-  [class~="text-[#70adff]"],
-  [class~="text-[#71aaff]"],
-  [class~="text-[#82aaff]"],
-  [class~="text-[#69aaff]"]
-) {
-  color: #245fa8;
+html[data-theme="light"] [class~="text-[#91a8c0]"] {
+  color: #506984;
+}
+
+html[data-theme="light"] [class~="text-[#7094bd]"] {
+  color: #42658a;
+}
+
+html[data-theme="light"] .mobile-navigation a[aria-current="page"] svg {
+  color: #42658a;
 }
 
 html[data-theme="light"] :is([class~="text-[#addb67]"], [class~="text-[#c792ea]"]) {
@@ -154,8 +157,8 @@ html[data-theme="light"] [class~="text-[#c792ea]"] {
   color: #8151a5;
 }
 
-html[data-theme="light"] [class~="border-[#438fe9]"] {
-  border-color: #3974bb;
+html[data-theme="light"] [class~="border-[#7188a2]"] {
+  border-color: #657d98;
 }
 
 html[data-theme="light"] :is(
@@ -164,8 +167,7 @@ html[data-theme="light"] :is(
   [class*="border-[rgba(110,154,209"],
   [class*="border-[rgba(114,151,196"],
   [class*="border-[rgba(120,157,202"],
-  [class*="border-[rgba(117,178,255"],
-  [class*="border-[rgba(86,157,255"]
+  [class*="border-[rgba(143,166,192"]
 ) {
   border-color: rgba(54, 82, 119, .2);
 }
