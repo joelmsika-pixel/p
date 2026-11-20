@@ -18,15 +18,29 @@ const activeSection = ref('home')
 const headerVisible = ref(true)
 const headerElement = ref(null)
 const themeIcon = ref(null)
-const theme = ref(localStorage.getItem('portfolio-theme') === 'light' ? 'light' : 'dark')
+const systemThemePreference = window.matchMedia('(prefers-color-scheme: light)')
+const savedTheme = localStorage.getItem('portfolio-theme')
+const themeOverride = ref(savedTheme === 'light' || savedTheme === 'dark' ? savedTheme : null)
+const theme = ref(themeOverride.value ?? (systemThemePreference.matches ? 'light' : 'dark'))
 let scrollFrame = 0
 let lastScrollY = 0
 let sectionAnimationContext
 
-function applyTheme(nextTheme) {
+function applyTheme(nextTheme, savePreference = true) {
   theme.value = nextTheme
-  localStorage.setItem('portfolio-theme', nextTheme)
+  if (savePreference) {
+    themeOverride.value = nextTheme
+    localStorage.setItem('portfolio-theme', nextTheme)
+  }
   document.documentElement.dataset.theme = nextTheme
+}
+
+function handleSystemThemeChange(event) {
+  if (themeOverride.value) return
+
+  const nextTheme = event.matches ? 'light' : 'dark'
+  applyTheme(nextTheme, false)
+  animateNavigationLinks()
 }
 
 function toggleTheme(event) {
@@ -223,6 +237,7 @@ function setupSectionAnimations() {
 
 onMounted(() => {
   document.documentElement.dataset.theme = theme.value
+  systemThemePreference.addEventListener('change', handleSystemThemeChange)
   lastScrollY = window.scrollY
   window.addEventListener('scroll', handleScroll, { passive: true })
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -244,6 +259,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
+  systemThemePreference.removeEventListener('change', handleSystemThemeChange)
   window.removeEventListener('scroll', handleScroll)
   sectionAnimationContext?.revert()
   if (scrollFrame) window.cancelAnimationFrame(scrollFrame)
