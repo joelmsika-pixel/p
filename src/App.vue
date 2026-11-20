@@ -218,7 +218,7 @@ function setupSectionAnimations() {
 
   sectionAnimationContext = gsap.context(() => {
     document.querySelectorAll('section[id]').forEach((section) => {
-      const targets = Array.from(section.querySelectorAll('h1, h2, h3, p, article, blockquote, figure'))
+      const targets = Array.from(section.querySelectorAll('h1, h2, h3, p, article:not(.reward-card), blockquote, figure'))
       const label = section.querySelector('span.block.w-fit')
       if (label) targets.unshift(label)
       if (!targets.length) return

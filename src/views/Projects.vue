@@ -54,9 +54,6 @@ const projects = [
     category: 'E-COMMERCE',
     title: 'E-commerce Website',
     description: 'Created using the Webyetu CMS platform.',
-    skills: [
-      { name: 'Tailwind CSS', icon: siTailwindcss },
-    ],
     slides: ecommerceSlides,
     link: 'https://eshop.co.tz',
     linkLabel: 'Visit Eshop.co.tz',
