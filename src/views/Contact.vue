@@ -1,5 +1,6 @@
 <script setup>
 import { siGithub, siInstagram, siWhatsapp } from 'simple-icons'
+import { animateSocialLink } from '../utils/socialLinkAnimation'
 
 const contactDetails = [
   { label: 'EMAIL', value: 'joelmsika@gmail.com', href: 'mailto:joelmsika@gmail.com' },
@@ -8,9 +9,9 @@ const contactDetails = [
 ]
 
 const socialLinks = [
-  { name: 'GitHub', href: 'https://github.com/joelmsika-pixel', icon: siGithub },
-  { name: 'Instagram', href: 'https://instagram.com/joelmsika', icon: siInstagram },
-  { name: 'WhatsApp', href: 'https://wa.me/25561519837', icon: siWhatsapp },
+  { name: 'GitHub', href: 'https://github.com/joelmsika-pixel', icon: siGithub, iconColor: '#181717' },
+  { name: 'Instagram', href: 'https://instagram.com/joelmsika', icon: siInstagram, iconColor: '#d62976' },
+  { name: 'WhatsApp', href: 'https://wa.me/25561519837', icon: siWhatsapp, iconColor: '#25d366' },
 ]
 
 const currentYear = new Date().getFullYear()
@@ -55,11 +56,24 @@ const currentYear = new Date().getFullYear()
               :title="social.name"
               target="_blank"
               rel="noopener noreferrer"
-              :class="`contact-social-link--${social.name.toLowerCase()}`"
-              class="contact-social-link relative isolate grid size-11 place-items-center overflow-hidden rounded-full"
+              :class="`social-link--${social.name.toLowerCase()}`"
+              class="social-link relative grid size-11 place-items-center overflow-hidden rounded-full border border-[rgba(143,166,192,0.3)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5b9dd5]"
+              @mouseenter="animateSocialLink($event, true, social)"
+              @mouseleave="animateSocialLink($event, false, social)"
+              @focus="animateSocialLink($event, true, social)"
+              @blur="animateSocialLink($event, false, social)"
             >
-              <span class="contact-social-fill absolute inset-0 z-0 rounded-[inherit]" aria-hidden="true"></span>
-              <svg class="contact-social-icon relative z-[1] size-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <span
+                class="social-fill absolute inset-0"
+                :class="`social-fill--${social.name.toLowerCase()}`"
+                aria-hidden="true"
+              ></span>
+              <svg
+                class="social-icon relative z-[1] size-5"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
                 <path :d="social.icon.path" />
               </svg>
             </a>

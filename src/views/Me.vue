@@ -1,6 +1,6 @@
 <script setup>
 import portrait from '../assets/file_0000000007308211b26b89fa01cca4c5-removebg-preview.png'
-import { gsap } from '../animations'
+import { animateSocialLink } from '../utils/socialLinkAnimation'
 
 const socialLinks = [
   { name: 'GitHub', href: 'https://github.com/joelmsika-pixel', iconColor: '#181717' },
@@ -8,51 +8,6 @@ const socialLinks = [
   { name: 'WhatsApp', href: 'https://wa.me/25561519837', iconColor: '#25d366' },
 ]
 
-function animateSocialLink(event, isActive, social) {
-  const link = event.currentTarget
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const isLightTheme = document.documentElement.dataset.theme === 'light'
-  const duration = reduceMotion ? 0 : 0.45
-  const fill = link.querySelector('.social-fill')
-  const icon = link.querySelector('.social-icon')
-
-  gsap.to(fill, {
-    scaleY: isActive ? 1 : 0,
-    ...(social.name === 'GitHub' && isActive
-      ? { backgroundColor: isLightTheme ? '#181717' : '#f0f6fc' }
-      : {}),
-    duration,
-    ease: 'power3.out',
-    overwrite: 'auto',
-  })
-  gsap.to(icon, {
-    color: isActive
-      ? (social.name === 'GitHub' && !isLightTheme ? '#181717' : '#ffffff')
-      : getSocialIconColor(social),
-    scale: isActive && !reduceMotion ? 1.12 : 1,
-    duration: reduceMotion ? 0 : 0.25,
-    ease: 'power2.out',
-    overwrite: 'auto',
-    onComplete: () => {
-      if (!isActive) gsap.set(icon, { clearProps: 'color' })
-    },
-  })
-  gsap.to(link, {
-    y: isActive && !reduceMotion ? -3 : 0,
-    borderColor: isActive ? '#5b9dd5' : 'rgba(143,166,192,0.3)',
-    duration: reduceMotion ? 0 : 0.25,
-    ease: 'power2.out',
-    overwrite: 'auto',
-  })
-}
-
-function getSocialIconColor(social) {
-  if (social.name === 'GitHub' && document.documentElement.dataset.theme !== 'light') {
-    return '#f0f6fc'
-  }
-
-  return social.iconColor
-}
 </script>
 
 <template>
@@ -130,7 +85,6 @@ function getSocialIconColor(social) {
             <svg
               v-else-if="social.name === 'Instagram'"
               class="social-icon relative z-[1] size-5"
-              :style="{ color: social.iconColor }"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -146,7 +100,6 @@ function getSocialIconColor(social) {
             <svg
               v-else
               class="social-icon relative z-[1] size-5"
-              :style="{ color: social.iconColor }"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
