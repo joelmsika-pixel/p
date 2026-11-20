@@ -1,10 +1,40 @@
 <script setup>
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { gsap } from '../animations'
 import Me from './Me.vue'
 import MySkills from './MySkills.vue'
 import Projects from './Projects.vue'
 import Testimonials from './Testimonials.vue'
 import Rewards from './Rewards.vue'
 import Contact from './Contact.vue'
+
+const typedIntro = ref(null)
+let introContext
+
+onMounted(() => {
+  if (!typedIntro.value) return
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    gsap.set(typedIntro.value, { width: '23ch', borderRightWidth: 0 })
+    return
+  }
+
+  introContext = gsap.context(() => {
+    gsap.set(typedIntro.value, { width: 0 })
+    gsap.timeline({ repeat: -1, repeatDelay: 2.2, delay: 0.35 })
+      .to(typedIntro.value, { width: '23ch', duration: 2.8, ease: 'steps(23)' })
+
+    gsap.to(typedIntro.value, {
+      borderRightColor: 'transparent',
+      duration: 0.375,
+      ease: 'steps(1)',
+      repeat: -1,
+      yoyo: true,
+    })
+  }, document.querySelector('#home'))
+})
+
+onBeforeUnmount(() => introContext?.revert())
 </script>
 
 <template>
@@ -41,7 +71,7 @@ import Contact from './Contact.vue'
             <div class="typed-code-body flex min-w-0 items-start gap-3 px-[clamp(18px,3vw,34px)] py-[clamp(24px,3.8vw,42px)] max-[640px]:gap-2 max-[640px]:px-3 max-[640px]:py-[22px]">
               <span class="inline-block w-[30px] shrink-0 pt-[3px] font-code text-[11px] text-[#546882] select-none max-[640px]:w-[22px] max-[640px]:text-[9px]" aria-hidden="true">01</span>
               <h1 id="hero-title" class="m-0 min-w-0 whitespace-nowrap font-code text-[clamp(13px,1.35vw,18px)] font-medium leading-[1.8] tracking-[-.06em] text-[#d0daea] max-[640px]:text-[clamp(8px,2.7vw,12px)]" aria-label="Hello, I'm Joel Msika">
-                <span class="text-[#91a8c0]">console.log</span>(<span class="inline-block w-0 max-w-[23ch] overflow-hidden border-r-2 border-[#91a8c0] align-bottom text-[#addb67] whitespace-nowrap [animation:type-intro_5s_steps(23,end)_.35s_infinite,blink-caret_.75s_step-end_infinite] motion-reduce:w-[23ch] motion-reduce:animate-none motion-reduce:border-r-0">"Hello, I'm Joel Msika"</span>);
+                <span class="text-[#91a8c0]">console.log</span>(<span ref="typedIntro" class="inline-block w-0 max-w-[23ch] overflow-hidden border-r-2 border-[#91a8c0] align-bottom text-[#addb67] whitespace-nowrap">"Hello, I'm Joel Msika"</span>);
               </h1>
             </div>
           </div>

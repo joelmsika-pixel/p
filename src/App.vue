@@ -1,8 +1,10 @@
 <script setup>
 import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { gsap, ScrollTrigger } from './animations'
 
 const route = useRoute()
+const router = useRouter()
 const sectionIds = ['home', 'me', 'my-skills', 'projects', 'testimonials', 'rewards', 'contact']
 const navigationLinks = sectionIds.map((id) => ({
   id,
@@ -15,10 +17,13 @@ const navigationLinks = sectionIds.map((id) => ({
 }))
 const activeSection = ref('home')
 const headerVisible = ref(true)
+const headerElement = ref(null)
+const themeButton = ref(null)
+const themeIcon = ref(null)
 const theme = ref(localStorage.getItem('portfolio-theme') === 'light' ? 'light' : 'dark')
 let scrollFrame = 0
 let lastScrollY = 0
-let themeTransitionTimeout = 0
+let sectionAnimationContext
 
 function applyTheme(nextTheme) {
   theme.value = nextTheme
@@ -26,35 +31,102 @@ function applyTheme(nextTheme) {
   document.documentElement.dataset.theme = nextTheme
 }
 
-function toggleTheme(event) {
+function toggleTheme() {
   const nextTheme = theme.value === 'dark' ? 'light' : 'dark'
-  const root = document.documentElement
-  const buttonBounds = event.currentTarget.getBoundingClientRect()
-  const originX = buttonBounds.left + buttonBounds.width / 2
-  const originY = buttonBounds.top + buttonBounds.height / 2
-
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const finishThemeChange = () => {
     applyTheme(nextTheme)
+    animateNavigationLinks()
+    if (!reduceMotion) {
+      nextTick(() => {
+        gsap.fromTo(themeIcon.value, { rotation: -90, scale: 0.6, autoAlpha: 0 }, {
+          rotation: 0,
+          scale: 1,
+          autoAlpha: 1,
+          duration: 0.4,
+          ease: 'back.out(1.7)',
+        })
+      })
+    }
+  }
+
+  if (reduceMotion) {
+    finishThemeChange()
     return
   }
 
-  if (document.startViewTransition) {
-    root.style.setProperty('--theme-origin-x', `${originX}px`)
-    root.style.setProperty('--theme-origin-y', `${originY}px`)
-    root.style.setProperty('--theme-reveal-radius', `${Math.hypot(window.innerWidth, window.innerHeight)}px`)
-    document.startViewTransition(async () => {
-      applyTheme(nextTheme)
-      await nextTick()
+  const buttonBounds = themeButton.value.getBoundingClientRect()
+  const originX = buttonBounds.left + buttonBounds.width / 2
+  const originY = window.scrollY + buttonBounds.top + buttonBounds.height / 2
+  const height = document.documentElement.scrollHeight
+  const radius = Math.max(
+    Math.hypot(originX, originY),
+    Math.hypot(window.innerWidth - originX, originY),
+    Math.hypot(originX, height - originY),
+    Math.hypot(window.innerWidth - originX, height - originY),
+  )
+
+  gsap.timeline()
+    .set('#app', { clipPath: `circle(0px at ${originX}px ${originY}px)` })
+    .call(finishThemeChange)
+    .to('#app', {
+      clipPath: `circle(${radius}px at ${originX}px ${originY}px)`,
+      duration: 0.55,
+      ease: 'power2.inOut',
     })
-    return
+    .set('#app', { clearProps: 'clipPath' })
+}
+
+function animateNavigationLinks() {
+  const activeColor = theme.value === 'light' ? '#1769aa' : '#c5e3c9'
+  const inactiveColor = theme.value === 'light' ? '#4a5b50' : '#a7b5ca'
+
+  document.querySelectorAll('.desktop-navigation a, .mobile-navigation a').forEach((link) => {
+    const color = link.getAttribute('aria-current') === 'page' ? activeColor : inactiveColor
+    gsap.to(link, { color, duration: 0.2, ease: 'power1.out', overwrite: 'auto' })
+  })
+}
+
+function animateLinkHover(event, isHovering, linkId) {
+  const link = event.currentTarget
+  const isActive = activeSection.value === linkId
+  const color = isHovering
+    ? (theme.value === 'light' ? '#34583b' : '#b4c9b5')
+    : (isActive ? (theme.value === 'light' ? '#1769aa' : '#c5e3c9') : (theme.value === 'light' ? '#4a5b50' : '#a7b5ca'))
+
+  gsap.to(link, { color, duration: 0.2, ease: 'power1.out', overwrite: 'auto' })
+}
+
+function animateThemeToggleHover(event, isHovering) {
+  const color = theme.value === 'light'
+    ? (isHovering ? '#2e5d36' : '#496458')
+    : (isHovering ? '#a3b5c9' : '#91a8c0')
+
+  gsap.to(event.currentTarget, { color, duration: 0.2, ease: 'power1.out', overwrite: 'auto' })
+}
+
+async function navigateToSection(event, id) {
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return
+  event.preventDefault()
+
+  const destination = router.resolve({ path: '/', hash: `#${id}` })
+  if (route.fullPath !== destination.fullPath) {
+    await router.push(destination.fullPath)
+    await nextTick()
   }
 
-  root.classList.add('theme-transitioning')
-  applyTheme(nextTheme)
-  window.clearTimeout(themeTransitionTimeout)
-  themeTransitionTimeout = window.setTimeout(() => {
-    root.classList.remove('theme-transitioning')
-  }, 320)
+  const target = document.getElementById(id)
+  if (!target) return
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  gsap.to(window, {
+    duration: reduceMotion ? 0 : 0.85,
+    scrollTo: { y: target, offsetY: 24, autoKill: true },
+    ease: 'power2.inOut',
+    overwrite: 'auto',
+    onUpdate: scheduleActiveSectionUpdate,
+    onComplete: scheduleActiveSectionUpdate,
+  })
 }
 
 function updateActiveSection() {
@@ -84,6 +156,7 @@ function scheduleActiveSectionUpdate() {
 
 function handleScroll() {
   const currentScrollY = window.scrollY
+  const wasHeaderVisible = headerVisible.value
 
   if (currentScrollY <= 8) {
     headerVisible.value = true
@@ -93,37 +166,88 @@ function handleScroll() {
     headerVisible.value = false
   }
 
+  if (headerVisible.value !== wasHeaderVisible) {
+    gsap.to(headerElement.value, {
+      yPercent: headerVisible.value ? 0 : -110,
+      duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 0.28,
+      ease: 'power2.out',
+      overwrite: 'auto',
+    })
+  }
+
   lastScrollY = currentScrollY
   scheduleActiveSectionUpdate()
 }
 
 watch(
-  () => route.fullPath,
+  () => route.path,
   async () => {
     await nextTick()
+    setupSectionAnimations()
+    ScrollTrigger.refresh()
     scheduleActiveSectionUpdate()
   },
 )
+
+watch(activeSection, animateNavigationLinks, { flush: 'post' })
+
+function setupSectionAnimations() {
+  sectionAnimationContext?.revert()
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+  sectionAnimationContext = gsap.context(() => {
+    document.querySelectorAll('section[id]').forEach((section) => {
+      const targets = Array.from(section.querySelectorAll('h1, h2, h3, p, article, blockquote'))
+      const label = section.querySelector(':scope > div > span:first-child')
+      if (label) targets.unshift(label)
+      if (!targets.length) return
+
+      gsap.fromTo(targets, { autoAlpha: 0, y: 18 }, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.045,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: section, start: 'top 82%', once: true },
+      })
+    })
+  })
+}
 
 onMounted(() => {
   document.documentElement.dataset.theme = theme.value
   lastScrollY = window.scrollY
   window.addEventListener('scroll', handleScroll, { passive: true })
-  nextTick(scheduleActiveSectionUpdate)
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  gsap.set(headerElement.value, { yPercent: reduceMotion ? 0 : -110 })
+  if (!reduceMotion) {
+    gsap.to(headerElement.value, { yPercent: 0, duration: 0.35, ease: 'power2.out' })
+  }
+  setupSectionAnimations()
+  nextTick(() => {
+    if (route.hash) {
+      const target = document.getElementById(route.hash.slice(1))
+      if (target) {
+        gsap.set(window, { scrollTo: { y: target, offsetY: 24 } })
+      }
+    }
+    scheduleActiveSectionUpdate()
+    animateNavigationLinks()
+  })
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
+  sectionAnimationContext?.revert()
   if (scrollFrame) window.cancelAnimationFrame(scrollFrame)
-  window.clearTimeout(themeTransitionTimeout)
 })
 </script>
 
 <template>
   <div class="min-h-screen pt-24 max-[640px]:pt-[68px] max-[640px]:pb-[calc(92px+env(safe-area-inset-bottom))]">
     <header
-      class="fixed left-0 top-0 z-20 flex min-h-24 w-full -translate-y-[110%] items-center justify-between border-b border-[rgba(176,202,241,0.14)] bg-[rgba(7,16,31,0.96)] px-[clamp(24px,8.3vw,132px)] backdrop-blur-[16px] transition-transform duration-[280ms] ease-in-out motion-reduce:transition-none max-[640px]:min-h-[68px] max-[640px]:px-5"
-      :class="{ 'translate-y-0': headerVisible }"
+      ref="headerElement"
+      class="fixed left-0 top-0 z-20 flex min-h-24 w-full items-center justify-between border-b border-[rgba(176,202,241,0.14)] bg-[rgba(7,16,31,0.96)] px-[clamp(24px,8.3vw,132px)] backdrop-blur-[16px] max-[640px]:min-h-[68px] max-[640px]:px-5"
       :inert="!headerVisible"
     >
       <RouterLink
@@ -137,26 +261,37 @@ onBeforeUnmount(() => {
         >JM</span>
         <span>JOEL MSIKA</span>
       </RouterLink>
-      <nav class="flex items-center gap-[clamp(14px,2vw,29px)] max-[640px]:hidden" aria-label="Main navigation">
+      <nav class="desktop-navigation flex items-center gap-[clamp(14px,2vw,29px)] max-[640px]:hidden" aria-label="Main navigation">
         <RouterLink
           v-for="link in navigationLinks"
           :key="link.id"
           :to="`/#${link.id}`"
-          class="font-code text-xs font-medium leading-none text-[#a7b5ca] no-underline transition-colors duration-200 hover:text-[#b4c9b5]"
+          class="font-code text-xs font-medium leading-none text-[#a7b5ca] no-underline"
           :class="{ 'text-[#c5e3c9]': activeSection === link.id }"
           :aria-current="activeSection === link.id ? 'page' : undefined"
+          @mouseenter="animateLinkHover($event, true, link.id)"
+          @mouseleave="animateLinkHover($event, false, link.id)"
+          @focus="animateLinkHover($event, true, link.id)"
+          @blur="animateLinkHover($event, false, link.id)"
+          @click="navigateToSection($event, link.id)"
         >{{ link.label }}</RouterLink>
       </nav>
       <button
-        class="ml-5 grid size-10 shrink-0 cursor-pointer place-items-center rounded-full p-2 text-[#91a8c0] transition-colors hover:text-[#a3b5c9] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#91a8c0] max-[900px]:ml-3"
+        ref="themeButton"
+        class="ml-5 grid size-10 shrink-0 cursor-pointer place-items-center rounded-full p-2 text-[#91a8c0] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#91a8c0] max-[900px]:ml-3"
         type="button"
         :aria-label="`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`"
         :title="`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`"
         @click="toggleTheme"
+        @mouseenter="animateThemeToggleHover($event, true)"
+        @mouseleave="animateThemeToggleHover($event, false)"
+        @focus="animateThemeToggleHover($event, true)"
+        @blur="animateThemeToggleHover($event, false)"
       >
         <svg
           v-if="theme === 'dark'"
-          class="size-full"
+          ref="themeIcon"
+          class="theme-icon size-full"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -170,7 +305,8 @@ onBeforeUnmount(() => {
         </svg>
         <svg
           v-else
-          class="size-full"
+          ref="themeIcon"
+          class="theme-icon size-full"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -191,11 +327,16 @@ onBeforeUnmount(() => {
         v-for="link in navigationLinks"
         :key="link.id"
         :to="`/#${link.id}`"
-        class="flex min-h-[76px] flex-col items-center justify-center gap-1 rounded-xl py-1 font-code text-[8px] leading-none text-[#a7b5ca] no-underline transition-colors duration-200 hover:text-[#b4c9b5]"
+        class="flex min-h-[76px] flex-col items-center justify-center gap-1 rounded-xl py-1 font-code text-[8px] leading-none text-[#a7b5ca] no-underline"
         :class="{ 'text-[#c5e3c9]': activeSection === link.id }"
         :aria-label="link.label"
         :title="link.label"
         :aria-current="activeSection === link.id ? 'page' : undefined"
+        @mouseenter="animateLinkHover($event, true, link.id)"
+        @mouseleave="animateLinkHover($event, false, link.id)"
+        @focus="animateLinkHover($event, true, link.id)"
+        @blur="animateLinkHover($event, false, link.id)"
+        @click="navigateToSection($event, link.id)"
       >
         <svg
           v-if="link.id === 'home'"
