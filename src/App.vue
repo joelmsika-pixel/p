@@ -82,7 +82,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="min-h-screen pt-24 max-[640px]:pt-[68px] max-[640px]:pb-[calc(96px+env(safe-area-inset-bottom))] max-[375px]:pb-[calc(160px+env(safe-area-inset-bottom))]">
+  <div class="min-h-screen pt-24 max-[640px]:pt-[68px] max-[640px]:pb-[calc(96px+env(safe-area-inset-bottom))] max-[520px]:pb-[calc(160px+env(safe-area-inset-bottom))]">
     <header
       class="fixed left-0 top-0 z-20 flex min-h-24 w-full -translate-y-[110%] items-center justify-between border-b border-[rgba(176,202,241,0.14)] bg-[rgba(7,16,31,0.96)] px-[clamp(24px,8.3vw,132px)] backdrop-blur-[16px] transition-transform duration-[280ms] ease-in-out motion-reduce:transition-none max-[640px]:min-h-[68px] max-[640px]:px-5"
       :class="{ 'translate-y-0': headerVisible }"
@@ -146,14 +146,14 @@ onBeforeUnmount(() => {
       </button>
     </header>
     <nav
-      class="fixed bottom-[calc(14px+env(safe-area-inset-bottom))] left-1/2 z-30 hidden w-max max-w-[calc(100vw-16px)] -translate-x-1/2 items-center justify-center gap-0.5 overflow-x-auto rounded-full border border-[rgba(143,177,225,0.18)] bg-[rgba(7,16,31,0.92)] p-2 shadow-[0_12px_36px_rgba(0,0,0,0.32)] backdrop-blur-[18px] [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden max-[640px]:flex max-[375px]:w-[calc(100vw-24px)] max-[375px]:flex-wrap max-[375px]:gap-1"
+      class="fixed bottom-0 left-0 z-30 hidden w-full grid-cols-7 items-stretch gap-1 border-t border-[rgba(143,177,225,0.18)] bg-[rgba(7,16,31,0.98)] px-2 pt-2 pb-[calc(8px+env(safe-area-inset-bottom))] shadow-[0_-8px_24px_rgba(0,0,0,0.2)] backdrop-blur-[18px] max-[640px]:grid max-[520px]:grid-cols-4"
       aria-label="Mobile navigation"
     >
       <RouterLink
         v-for="link in navigationLinks"
         :key="link.id"
         :to="`/#${link.id}`"
-        class="flex shrink-0 flex-col items-center justify-center gap-1 rounded-xl px-1 py-2 font-code text-[9px] leading-none text-[#a7b5ca] no-underline transition-colors duration-200 hover:text-[#75b2ff] max-[375px]:min-h-[58px] max-[375px]:w-16 max-[375px]:px-0 max-[375px]:text-[8px]"
+        class="flex min-h-[68px] flex-col items-center justify-center gap-2 rounded-xl px-1 py-2 font-code text-[10px] leading-none text-[#a7b5ca] no-underline transition-colors duration-200 hover:text-[#75b2ff] max-[520px]:min-h-[64px]"
         :class="{ 'bg-[rgba(62,132,220,0.12)] text-[#75b2ff]': activeSection === link.id }"
         :aria-label="link.label"
         :title="link.label"
@@ -161,7 +161,7 @@ onBeforeUnmount(() => {
       >
         <svg
           v-if="link.id === 'home'"
-          class="size-6 max-[375px]:size-5"
+          class="size-7"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -174,7 +174,7 @@ onBeforeUnmount(() => {
         </svg>
         <svg
           v-else-if="link.id === 'me'"
-          class="size-6 max-[375px]:size-5"
+          class="size-7"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -188,7 +188,7 @@ onBeforeUnmount(() => {
         </svg>
         <svg
           v-else-if="link.id === 'my-skills'"
-          class="size-6 max-[375px]:size-5"
+          class="size-7"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -201,7 +201,7 @@ onBeforeUnmount(() => {
         </svg>
         <svg
           v-else-if="link.id === 'projects'"
-          class="size-6 max-[375px]:size-5"
+          class="size-7"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -214,7 +214,7 @@ onBeforeUnmount(() => {
         </svg>
         <svg
           v-else-if="link.id === 'testimonials'"
-          class="size-6 max-[375px]:size-5"
+          class="size-7"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -228,7 +228,7 @@ onBeforeUnmount(() => {
         </svg>
         <svg
           v-else-if="link.id === 'rewards'"
-          class="size-6 max-[375px]:size-5"
+          class="size-7"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -242,7 +242,7 @@ onBeforeUnmount(() => {
         </svg>
         <svg
           v-else
-          class="size-6 max-[375px]:size-5"
+          class="size-7"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"

@@ -6,10 +6,6 @@
   >
     <div class="mx-auto w-full max-w-[1120px]">
       <span class="mb-6 block w-fit rounded-[6px] border border-[rgba(110,154,209,0.2)] bg-[rgba(12,27,47,0.78)] px-[11px] py-2 font-code text-[10px] font-medium leading-none tracking-[.05em] text-[#72b4ff]">skills.json</span>
-      <p class="mb-[22px] flex items-center gap-[11px] font-code text-[11px] font-semibold leading-none tracking-[.13em] text-[#9eb4d3]">
-        <span class="size-[7px] rounded-full bg-[#55a1ff] shadow-[0_0_16px_rgba(85,161,255,0.85)]"></span>
-        03 — WHAT I DO
-      </p>
       <h2 id="skills-title" class="m-0 text-[clamp(32px,4.5vw,52px)] font-semibold leading-[1.08] tracking-[-.055em] text-[#f4f7ff]"><span class="font-normal text-[#5b708d]" aria-hidden="true">// </span>My skills</h2>
       <div class="mt-12 grid grid-cols-3 gap-[18px] max-[900px]:grid-cols-2 max-[640px]:mt-[34px] max-[640px]:grid-cols-1 max-[640px]:gap-[14px]">
         <article class="info-card relative min-w-0 min-h-[230px] overflow-hidden rounded-[9px] border border-[rgba(114,151,196,0.2)] bg-[rgba(8,19,34,0.86)] p-[22px] shadow-[0_16px_38px_rgba(0,0,0,0.16)] max-[640px]:min-h-0">
