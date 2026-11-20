@@ -60,6 +60,8 @@ onBeforeUnmount(() => introContext?.revert())
               class="absolute inset-[3px] size-[calc(100%-6px)] rounded-full object-cover object-[center_18%]"
               src="../assets/file_0000000007308211b26b89fa01cca4c5-removebg-preview.png"
               alt="Portrait of Joel Msika"
+              fetchpriority="high"
+              decoding="async"
             />
           </div>
           <div class="typed-code-panel overflow-hidden rounded-[14px] border border-[rgba(120,157,202,0.24)] bg-[rgba(8,18,32,0.91)] shadow-[0_8px_22px_rgba(0,0,0,0.17),inset_0_1px_0_rgba(210,230,255,0.035)] backdrop-blur-[14px]">

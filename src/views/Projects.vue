@@ -8,19 +8,19 @@ import {
   siTypescript,
   siVuedotjs,
 } from 'simple-icons'
-import eshop1 from '../assets/Eshop1.png'
-import eshop2 from '../assets/Eshop2.png'
-import eshop3 from '../assets/Eshop3.png'
-import gratech1 from '../assets/G1.png'
-import gratech2 from '../assets/G2.png'
-import gratech5 from '../assets/G5.png'
-import clm1 from '../assets/C1.png'
-import clm2 from '../assets/C2.png'
-import clm3 from '../assets/G3.png'
-import biashara1 from '../assets/B1.png'
-import biashara2 from '../assets/B2.png'
-import biashara3 from '../assets/B3.png'
-import biashara4 from '../assets/B4.png'
+import eshop1 from '../assets/Eshop1.jpg'
+import eshop2 from '../assets/Eshop2.jpg'
+import eshop3 from '../assets/Eshop3.jpg'
+import gratech1 from '../assets/G1.jpg'
+import gratech2 from '../assets/G2.jpg'
+import gratech5 from '../assets/G5.jpg'
+import clm1 from '../assets/C1.jpg'
+import clm2 from '../assets/C2.jpg'
+import clm3 from '../assets/G3.jpg'
+import biashara1 from '../assets/B1.jpg'
+import biashara2 from '../assets/B2.jpg'
+import biashara3 from '../assets/B3.jpg'
+import biashara4 from '../assets/B4.jpg'
 
 const ecommerceSlides = [
   { src: eshop1, alt: 'Eshop homepage screenshot' },
@@ -220,6 +220,9 @@ onBeforeUnmount(() => slideshowTimers.forEach(timer => window.clearInterval(time
                 :src="project.slides[activeSlides[project.id]].src"
                 :alt="project.slides[activeSlides[project.id]].alt"
                 class="absolute inset-0 size-full object-cover object-[center_72%]"
+                loading="lazy"
+                decoding="async"
+                fetchpriority="low"
                 draggable="false"
               />
             </Transition>

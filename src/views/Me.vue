@@ -90,6 +90,7 @@ function getSocialIconColor(social) {
             :src="portrait"
             alt="Portrait of Joel Msika"
             loading="lazy"
+            decoding="async"
           />
           <div class="about-portrait-overlay absolute inset-0 flex flex-col justify-end px-5 pb-5 pt-20">
             <div class="text-xl font-semibold tracking-[-.03em] text-white">Joel Msika</div>
