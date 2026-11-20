@@ -1,10 +1,14 @@
 <script setup>
+import { ref } from 'vue'
 import {
   siCloudflare,
   siCloudinary,
   siGit,
   siGithub,
   siFirebase,
+  siGoogleads,
+  siGoogleanalytics,
+  siGooglesearchconsole,
   siGsap,
   siJavascript,
   siLaravel,
@@ -85,6 +89,15 @@ const skillGroups = [
     ],
   },
   {
+    title: 'SEO Optimization',
+    description: 'Search performance, analytics, and advertising.',
+    skills: [
+      { name: 'Google Analytics', icon: siGoogleanalytics },
+      { name: 'Google Search Console', icon: siGooglesearchconsole },
+      { name: 'Google Ads', icon: siGoogleads },
+    ],
+  },
+  {
     title: 'Tools & Workflow',
     description: 'Version control and collaboration.',
     skills: [
@@ -93,6 +106,8 @@ const skillGroups = [
     ],
   },
 ]
+
+const showAllSkills = ref(false)
 </script>
 
 <template>
@@ -108,9 +123,9 @@ const skillGroups = [
         <span class="font-code text-[10px] font-semibold tracking-[.1em] text-[#b4c9b5]">FULL-STACK DEVELOPMENT</span>
         <p class="m-0 font-code text-xs leading-[1.7] text-[#a1b1c8]">Frontend <span aria-hidden="true">/</span> backend <span aria-hidden="true">/</span> APIs <span aria-hidden="true">/</span> databases</p>
       </div>
-      <div class="mt-5 grid grid-cols-4 gap-3 max-[1050px]:grid-cols-3 max-[760px]:grid-cols-2 max-[440px]:grid-cols-1">
+      <div id="skills-groups" class="mt-5 grid grid-cols-4 gap-3 max-[1050px]:grid-cols-3 max-[760px]:grid-cols-2 max-[440px]:grid-cols-1">
         <article
-          v-for="group in skillGroups"
+          v-for="group in (showAllSkills ? skillGroups : skillGroups.slice(0, 3))"
           :key="group.title"
           class="skills-card flex min-w-0 flex-col rounded-xl p-4 transition duration-200"
         >
@@ -137,6 +152,17 @@ const skillGroups = [
             </li>
           </ul>
         </article>
+      </div>
+      <div class="mt-6 flex justify-center">
+        <button
+          type="button"
+          class="inline-flex min-h-10 items-center rounded-lg border border-[rgba(143,166,192,0.28)] bg-[rgba(143,166,192,0.07)] px-4 py-2 font-code text-xs font-medium text-[#b4c9b5] transition hover:border-[rgba(143,166,192,0.42)] hover:bg-[rgba(143,166,192,0.12)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#addb67]"
+          aria-controls="skills-groups"
+          :aria-expanded="showAllSkills"
+          @click="showAllSkills = !showAllSkills"
+        >
+          {{ showAllSkills ? 'View less' : 'View more' }}
+        </button>
       </div>
     </div>
   </section>
