@@ -87,7 +87,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="min-h-screen pt-24 max-[640px]:pt-[68px] max-[640px]:pb-[calc(76px+env(safe-area-inset-bottom))]">
+  <div class="min-h-screen pt-24 max-[640px]:pt-[68px] max-[640px]:pb-[calc(92px+env(safe-area-inset-bottom))]">
     <header
       class="fixed left-0 top-0 z-20 flex min-h-24 w-full -translate-y-[110%] items-center justify-between border-b border-[rgba(176,202,241,0.14)] bg-[rgba(7,16,31,0.96)] px-[clamp(24px,8.3vw,132px)] backdrop-blur-[16px] transition-transform duration-[280ms] ease-in-out motion-reduce:transition-none max-[640px]:min-h-[68px] max-[640px]:px-5"
       :class="{ 'translate-y-0': headerVisible }"
@@ -158,7 +158,7 @@ onBeforeUnmount(() => {
         v-for="link in navigationLinks"
         :key="link.id"
         :to="`/#${link.id}`"
-        class="flex min-h-16 flex-col items-center justify-center gap-1 rounded-xl py-1 font-code text-[8px] leading-none text-[#a7b5ca] no-underline transition-colors duration-200 hover:text-[#75b2ff]"
+        class="flex min-h-[76px] flex-col items-center justify-center gap-1 rounded-xl py-1 font-code text-[8px] leading-none text-[#a7b5ca] no-underline transition-colors duration-200 hover:text-[#75b2ff]"
         :class="{ 'bg-[rgba(62,132,220,0.12)] text-[#75b2ff]': activeSection === link.id }"
         :aria-label="link.label"
         :title="link.label"
