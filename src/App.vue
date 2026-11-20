@@ -18,7 +18,6 @@ const navigationLinks = sectionIds.map((id) => ({
 const activeSection = ref('home')
 const headerVisible = ref(true)
 const headerElement = ref(null)
-const themeButton = ref(null)
 const themeIcon = ref(null)
 const theme = ref(localStorage.getItem('portfolio-theme') === 'light' ? 'light' : 'dark')
 let scrollFrame = 0
@@ -31,23 +30,13 @@ function applyTheme(nextTheme) {
   document.documentElement.dataset.theme = nextTheme
 }
 
-function toggleTheme() {
+function toggleTheme(event) {
   const nextTheme = theme.value === 'dark' ? 'light' : 'dark'
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const finishThemeChange = () => {
+  const finishThemeChange = async () => {
     applyTheme(nextTheme)
     animateNavigationLinks()
-    if (!reduceMotion) {
-      nextTick(() => {
-        gsap.fromTo(themeIcon.value, { rotation: -90, scale: 0.6, autoAlpha: 0 }, {
-          rotation: 0,
-          scale: 1,
-          autoAlpha: 1,
-          duration: 0.4,
-          ease: 'back.out(1.7)',
-        })
-      })
-    }
+    await nextTick()
   }
 
   if (reduceMotion) {
@@ -55,26 +44,45 @@ function toggleTheme() {
     return
   }
 
-  const buttonBounds = themeButton.value.getBoundingClientRect()
+  const buttonBounds = event.currentTarget.getBoundingClientRect()
   const originX = buttonBounds.left + buttonBounds.width / 2
-  const originY = window.scrollY + buttonBounds.top + buttonBounds.height / 2
-  const height = document.documentElement.scrollHeight
-  const radius = Math.max(
-    Math.hypot(originX, originY),
-    Math.hypot(window.innerWidth - originX, originY),
-    Math.hypot(originX, height - originY),
-    Math.hypot(window.innerWidth - originX, height - originY),
-  )
+  const originY = buttonBounds.top + buttonBounds.height / 2
 
-  gsap.timeline()
-    .set('#app', { clipPath: `circle(0px at ${originX}px ${originY}px)` })
-    .call(finishThemeChange)
-    .to('#app', {
-      clipPath: `circle(${radius}px at ${originX}px ${originY}px)`,
-      duration: 0.55,
-      ease: 'power2.inOut',
+  if (document.startViewTransition) {
+    const root = document.documentElement
+    root.style.setProperty('--theme-origin-x', `${originX}px`)
+    root.style.setProperty('--theme-origin-y', `${originY}px`)
+    root.style.setProperty('--theme-reveal-radius', `${Math.hypot(window.innerWidth, window.innerHeight)}px`)
+
+    const transition = document.startViewTransition(finishThemeChange)
+    transition.finished.then(() => {
+      gsap.fromTo(themeIcon.value, { rotation: -90, scale: 0.6, autoAlpha: 0 }, {
+        rotation: 0,
+        scale: 1,
+        autoAlpha: 1,
+        duration: 0.4,
+        ease: 'back.out(1.7)',
+      })
     })
-    .set('#app', { clearProps: 'clipPath' })
+    return
+  }
+
+  gsap.to('#app', {
+    autoAlpha: 0.4,
+    duration: 0.16,
+    ease: 'power1.out',
+    onComplete: async () => {
+      await finishThemeChange()
+      gsap.to('#app', { autoAlpha: 1, duration: 0.25, ease: 'power2.out', clearProps: 'opacity,visibility' })
+      gsap.fromTo(themeIcon.value, { rotation: -90, scale: 0.6, autoAlpha: 0 }, {
+        rotation: 0,
+        scale: 1,
+        autoAlpha: 1,
+        duration: 0.4,
+        ease: 'back.out(1.7)',
+      })
+    },
+  })
 }
 
 function animateNavigationLinks() {
@@ -197,8 +205,8 @@ function setupSectionAnimations() {
 
   sectionAnimationContext = gsap.context(() => {
     document.querySelectorAll('section[id]').forEach((section) => {
-      const targets = Array.from(section.querySelectorAll('h1, h2, h3, p, article, blockquote'))
-      const label = section.querySelector(':scope > div > span:first-child')
+      const targets = Array.from(section.querySelectorAll('h1, h2, h3, p, article, blockquote, figure'))
+      const label = section.querySelector('span.block.w-fit')
       if (label) targets.unshift(label)
       if (!targets.length) return
 
@@ -277,7 +285,6 @@ onBeforeUnmount(() => {
         >{{ link.label }}</RouterLink>
       </nav>
       <button
-        ref="themeButton"
         class="ml-5 grid size-10 shrink-0 cursor-pointer place-items-center rounded-full p-2 text-[#91a8c0] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#91a8c0] max-[900px]:ml-3"
         type="button"
         :aria-label="`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`"
