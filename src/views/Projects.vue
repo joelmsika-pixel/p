@@ -5,6 +5,7 @@ import {
   siGooglesearchconsole,
   siLaravel,
   siNodedotjs,
+  siTailwindcss,
   siTypescript,
   siVuedotjs,
 } from 'simple-icons'
@@ -53,6 +54,9 @@ const projects = [
     category: 'E-COMMERCE',
     title: 'E-commerce Website',
     description: 'Created using the Webyetu CMS platform.',
+    skills: [
+      { name: 'Tailwind CSS', icon: siTailwindcss },
+    ],
     slides: ecommerceSlides,
     link: 'https://eshop.co.tz',
     linkLabel: 'Visit Eshop.co.tz',
@@ -64,6 +68,7 @@ const projects = [
     description: 'Company website for Gratech Company-Tanzania.',
     skills: [
       { name: 'Vue.js', icon: siVuedotjs },
+      { name: 'Tailwind CSS', icon: siTailwindcss },
       { name: 'Google Analytics', icon: siGoogleanalytics },
       { name: 'Google Search Console', icon: siGooglesearchconsole },
     ],
@@ -78,6 +83,7 @@ const projects = [
     description: 'Currently in development.',
     skills: [
       { name: 'Vue.js', icon: siVuedotjs },
+      { name: 'Tailwind CSS', icon: siTailwindcss },
       { name: 'Laravel', icon: siLaravel },
     ],
     slides: clmSlides,
@@ -91,6 +97,7 @@ const projects = [
     description: 'Point-of-sale (POS) system - MVP 1.',
     skills: [
       { name: 'Vue.js', icon: siVuedotjs },
+      { name: 'Tailwind CSS', icon: siTailwindcss },
       { name: 'Node.js', icon: siNodedotjs },
       { name: 'TypeScript', icon: siTypescript },
     ],
