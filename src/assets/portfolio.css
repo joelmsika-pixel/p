@@ -106,6 +106,16 @@ html[data-theme="light"] .social-link--github .social-icon {
     linear-gradient(135deg, #10243f, #0c1628);
 }
 
+.project-slideshow {
+  touch-action: pan-y;
+  user-select: none;
+  cursor: grab;
+}
+
+.project-slideshow:active {
+  cursor: grabbing;
+}
+
 .project-card {
   transition: transform .22s ease;
 }
@@ -148,6 +158,17 @@ html[data-theme="light"] .social-link--github .social-icon {
   font-size: 9px;
   font-weight: 500;
   letter-spacing: .07em;
+}
+
+.project-tool-icon {
+  display: inline-grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 1px solid rgba(143, 166, 192, .2);
+  border-radius: 9px;
+  background: rgba(143, 166, 192, .08);
+  color: #b4c9b5;
 }
 
 .project-title {
@@ -261,6 +282,12 @@ html[data-theme="light"] .project-index {
 }
 
 html[data-theme="light"] .project-category {
+  border-color: rgba(64, 88, 68, .18);
+  background: rgba(64, 88, 68, .06);
+  color: #34583b;
+}
+
+html[data-theme="light"] .project-tool-icon {
   border-color: rgba(64, 88, 68, .18);
   background: rgba(64, 88, 68, .06);
   color: #34583b;
