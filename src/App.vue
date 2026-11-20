@@ -18,11 +18,43 @@ const headerVisible = ref(true)
 const theme = ref(localStorage.getItem('portfolio-theme') === 'light' ? 'light' : 'dark')
 let scrollFrame = 0
 let lastScrollY = 0
+let themeTransitionTimeout = 0
 
-function toggleTheme() {
-  theme.value = theme.value === 'dark' ? 'light' : 'dark'
-  localStorage.setItem('portfolio-theme', theme.value)
-  document.documentElement.dataset.theme = theme.value
+function applyTheme(nextTheme) {
+  theme.value = nextTheme
+  localStorage.setItem('portfolio-theme', nextTheme)
+  document.documentElement.dataset.theme = nextTheme
+}
+
+function toggleTheme(event) {
+  const nextTheme = theme.value === 'dark' ? 'light' : 'dark'
+  const root = document.documentElement
+  const buttonBounds = event.currentTarget.getBoundingClientRect()
+  const originX = buttonBounds.left + buttonBounds.width / 2
+  const originY = buttonBounds.top + buttonBounds.height / 2
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    applyTheme(nextTheme)
+    return
+  }
+
+  if (document.startViewTransition) {
+    root.style.setProperty('--theme-origin-x', `${originX}px`)
+    root.style.setProperty('--theme-origin-y', `${originY}px`)
+    root.style.setProperty('--theme-reveal-radius', `${Math.hypot(window.innerWidth, window.innerHeight)}px`)
+    document.startViewTransition(async () => {
+      applyTheme(nextTheme)
+      await nextTick()
+    })
+    return
+  }
+
+  root.classList.add('theme-transitioning')
+  applyTheme(nextTheme)
+  window.clearTimeout(themeTransitionTimeout)
+  themeTransitionTimeout = window.setTimeout(() => {
+    root.classList.remove('theme-transitioning')
+  }, 320)
 }
 
 function updateActiveSection() {
@@ -83,6 +115,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
   if (scrollFrame) window.cancelAnimationFrame(scrollFrame)
+  window.clearTimeout(themeTransitionTimeout)
 })
 </script>
 

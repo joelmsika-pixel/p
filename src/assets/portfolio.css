@@ -29,6 +29,34 @@
   color: #c5e3c9;
 }
 
+::view-transition-old(root) {
+  animation: none;
+}
+
+::view-transition-new(root) {
+  animation: theme-circle-reveal 520ms cubic-bezier(.2, .75, .25, 1) both;
+}
+
+@keyframes theme-circle-reveal {
+  from {
+    clip-path: circle(0 at var(--theme-origin-x, 50%) var(--theme-origin-y, 50%));
+  }
+  to {
+    clip-path: circle(var(--theme-reveal-radius, 150vmax) at var(--theme-origin-x, 50%) var(--theme-origin-y, 50%));
+  }
+}
+
+html.theme-transitioning,
+html.theme-transitioning body,
+html.theme-transitioning #app,
+html.theme-transitioning #app *,
+html.theme-transitioning #app *::before,
+html.theme-transitioning #app *::after {
+  transition-property: color, background-color, border-color, box-shadow;
+  transition-duration: 320ms;
+  transition-timing-function: ease-in-out;
+}
+
 .section-surface {
   background:
     radial-gradient(ellipse at 95% 0%, rgba(67, 87, 112, .045), transparent 38%),
@@ -190,6 +218,12 @@ html[data-theme="light"] :is(
   [class*="border-[rgba(143,166,192"]
 ) {
   border-color: rgba(64, 88, 68, .28);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-new(root) {
+    animation: none;
+  }
 }
 
 @keyframes type-intro {
