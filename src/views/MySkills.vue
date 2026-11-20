@@ -33,6 +33,7 @@ const skillGroups = [
     description: 'Application logic and API development.',
     skills: [
       { name: 'Node.js', icon: siNodedotjs },
+      { name: 'TypeScript', icon: siTypescript },
       { name: 'Laravel', icon: siLaravel },
     ],
   },
