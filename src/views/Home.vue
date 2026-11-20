@@ -57,7 +57,7 @@ onBeforeUnmount(() => introContext?.revert())
         <div class="relative z-[1] flex w-full flex-col items-stretch gap-5 max-[640px]:max-w-[430px] max-[640px]:items-center">
           <div class="relative z-[2] mb-[-28px] aspect-square w-[clamp(136px,17vw,180px)] translate-y-[-28px] self-center overflow-hidden rounded-full border border-[rgba(143,166,192,0.38)] bg-[#10233d] p-[3px] shadow-[0_0_0_4px_rgba(143,166,192,0.035),0_8px_20px_rgba(0,0,0,0.16)] min-[641px]:max-[900px]:w-[146px] max-[640px]:mb-[-8px] max-[640px]:w-32 max-[640px]:translate-y-[-8px]">
             <img
-              class="absolute inset-[3px] size-[calc(100%-6px)] rounded-full object-cover object-[center_18%]"
+              class="portrait-photo absolute inset-[3px] size-[calc(100%-6px)] rounded-full object-cover object-[center_18%]"
               src="../assets/file_0000000007308211b26b89fa01cca4c5-removebg-preview.png"
               alt="Portrait of Joel Msika"
               fetchpriority="high"

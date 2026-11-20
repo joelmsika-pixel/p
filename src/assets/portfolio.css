@@ -300,6 +300,10 @@ html[data-theme="light"] .about-portrait-image {
   background: linear-gradient(145deg, #d7e5f3, #aebfd1);
 }
 
+html[data-theme="light"] .portrait-photo {
+  filter: brightness(.88) contrast(1.08);
+}
+
 html[data-theme="light"] {
   color-scheme: light;
   background: #f5f7f2;
@@ -358,15 +362,15 @@ html[data-theme="light"] .project-art {
 }
 
 html[data-theme="light"] .project-details-panel {
-  border-color: rgba(64, 88, 68, .2);
-  background: linear-gradient(145deg, #fcfdfb, #eef3eb);
-  box-shadow: 0 9px 22px rgba(40, 58, 42, .08);
+  border-color: rgba(64, 88, 68, .26);
+  background: linear-gradient(145deg, #ffffff, #fbfcf9);
+  box-shadow: 0 9px 24px rgba(40, 58, 42, .12);
 }
 
 html[data-theme="light"] .project-card:hover .project-details-panel,
 html[data-theme="light"] .project-card:focus-within .project-details-panel {
-  border-color: rgba(64, 88, 68, .34);
-  box-shadow: 0 13px 26px rgba(40, 58, 42, .13);
+  border-color: rgba(64, 88, 68, .42);
+  box-shadow: 0 14px 28px rgba(40, 58, 42, .18);
 }
 
 html[data-theme="light"] .project-index {
@@ -405,14 +409,14 @@ html[data-theme="light"] .project-visit-link:hover {
 }
 
 html[data-theme="light"] .reward-card {
-  border-color: rgba(64, 88, 68, .2);
-  background: linear-gradient(145deg, #fcfdfb, #eef3eb);
-  box-shadow: 0 8px 20px rgba(40, 58, 42, .07);
+  border-color: rgba(64, 88, 68, .26);
+  background: linear-gradient(145deg, #ffffff, #fbfcf9);
+  box-shadow: 0 8px 22px rgba(40, 58, 42, .12);
 }
 
 html[data-theme="light"] .reward-card:hover {
-  border-color: rgba(64, 88, 68, .34);
-  box-shadow: 0 12px 25px rgba(40, 58, 42, .12);
+  border-color: rgba(64, 88, 68, .42);
+  box-shadow: 0 13px 26px rgba(40, 58, 42, .18);
 }
 
 html[data-theme="light"] .reward-index,
@@ -555,14 +559,14 @@ html[data-theme="light"] .skills-overview {
 }
 
 html[data-theme="light"] .skills-card {
-  border-color: rgba(64, 88, 68, .18);
-  background: linear-gradient(145deg, #fbfcf9, #f0f4ee);
-  box-shadow: 0 6px 16px rgba(40, 58, 42, .07);
+  border-color: rgba(64, 88, 68, .26);
+  background: linear-gradient(145deg, #ffffff, #fbfcf9);
+  box-shadow: 0 7px 20px rgba(40, 58, 42, .12);
 }
 
 html[data-theme="light"] .skills-card:hover {
-  border-color: rgba(64, 88, 68, .34);
-  box-shadow: 0 9px 22px rgba(40, 58, 42, .12);
+  border-color: rgba(64, 88, 68, .42);
+  box-shadow: 0 11px 24px rgba(40, 58, 42, .18);
 }
 
 html[data-theme="light"] .skills-chip {
