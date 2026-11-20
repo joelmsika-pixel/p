@@ -5,7 +5,7 @@ import { gsap } from '../animations'
 const socialLinks = [
   { name: 'GitHub', href: 'https://github.com/joelmsika-pixel', iconColor: '#181717' },
   { name: 'Instagram', href: 'https://instagram.com/joelmsika', iconColor: '#d62976' },
-  { name: 'WhatsApp', href: 'https://wa.me/255615819837', iconColor: '#25d366' },
+  { name: 'WhatsApp', href: 'https://wa.me/25561519837', iconColor: '#25d366' },
 ]
 
 function animateSocialLink(event, isActive, social) {

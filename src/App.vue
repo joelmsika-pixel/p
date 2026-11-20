@@ -5,13 +5,12 @@ import { gsap, ScrollTrigger } from './animations'
 
 const route = useRoute()
 const router = useRouter()
-const sectionIds = ['home', 'me', 'my-skills', 'projects', 'testimonials', 'rewards', 'contact']
+const sectionIds = ['home', 'me', 'my-skills', 'projects', 'rewards']
 const navigationLinks = sectionIds.map((id) => ({
   id,
   label: id === 'my-skills' ? 'My Skills' : id.charAt(0).toUpperCase() + id.slice(1),
   mobileLabel: {
     'my-skills': 'Skills',
-    testimonials: 'Testim.',
     rewards: 'Rewards',
   }[id] ?? (id.charAt(0).toUpperCase() + id.slice(1)),
 }))
@@ -397,20 +396,6 @@ onBeforeUnmount(() => {
           aria-hidden="true"
         >
           <path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" />
-        </svg>
-        <svg
-          v-else-if="link.id === 'testimonials'"
-          class="size-[26px]"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.8"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M4 5h16v12h-8l-5 4v-4H4V5Z" />
-          <path d="M8 9h3m-3 4h8" />
         </svg>
         <svg
           v-else-if="link.id === 'rewards'"

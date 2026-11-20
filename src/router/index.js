@@ -3,9 +3,7 @@ import Home from '../views/Home.vue'
 import Me from '../views/Me.vue'
 import MySkills from '../views/MySkills.vue'
 import Projects from '../views/Projects.vue'
-import Testimonials from '../views/Testimonials.vue'
 import Rewards from '../views/Rewards.vue'
-import Contact from '../views/Contact.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,19 +34,9 @@ const router = createRouter({
       component: Projects,
     },
     {
-      path: '/testimonials',
-      name: 'testimonials',
-      component: Testimonials,
-    },
-    {
       path: '/rewards',
       name: 'rewards',
       component: Rewards,
-    },
-    {
-      path: '/contact',
-      name: 'contact',
-      component: Contact,
     },
   ],
 })

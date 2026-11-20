@@ -4,7 +4,6 @@ import { gsap } from '../animations'
 import Me from './Me.vue'
 import MySkills from './MySkills.vue'
 import Projects from './Projects.vue'
-import Testimonials from './Testimonials.vue'
 import Rewards from './Rewards.vue'
 import Contact from './Contact.vue'
 
@@ -102,9 +101,8 @@ onBeforeUnmount(() => introContext?.revert())
     <Me />
     <MySkills />
     <Projects />
-    <Testimonials />
     <Rewards preview />
-    <Contact />
   </main>
+  <Contact />
 </template>
 
