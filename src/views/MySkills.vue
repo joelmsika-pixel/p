@@ -1,7 +1,10 @@
 <script setup>
 import {
+  siCloudflare,
+  siCloudinary,
   siGit,
   siGithub,
+  siFirebase,
   siGsap,
   siJavascript,
   siLaravel,
@@ -39,11 +42,12 @@ const skillGroups = [
   },
   {
     title: 'Databases',
-    description: 'Relational data and hosted PostgreSQL.',
+    description: 'Relational, hosted, and cloud database platforms.',
     skills: [
       { name: 'PostgreSQL', icon: siPostgresql },
       { name: 'MySQL', icon: siMysql },
       { name: 'Neon', icon: siNeon },
+      { name: 'Firebase', icon: siFirebase },
     ],
   },
   {
@@ -70,6 +74,14 @@ const skillGroups = [
     skills: [
       { name: 'Vercel', icon: siVercel, contrast: true },
       { name: 'Render', icon: siRender, contrast: true },
+    ],
+  },
+  {
+    title: 'Image & Storage',
+    description: 'Image management, delivery, and cloud storage.',
+    skills: [
+      { name: 'Cloudinary', icon: siCloudinary },
+      { name: 'Cloudflare', icon: siCloudflare },
     ],
   },
   {
