@@ -84,6 +84,22 @@ html[data-theme="light"] .hero-mesh-dot {
   background-color: rgba(95, 133, 101, .62);
 }
 
+@media (max-width: 640px) {
+  .hero-mesh-dots {
+    display: block;
+    background-image: radial-gradient(circle, #c5e3c9 1.5px, transparent 1.6px);
+    background-size: 12px 12px;
+  }
+
+  .hero-mesh-dot {
+    display: none;
+  }
+
+  html[data-theme="light"] .hero-mesh-dots {
+    background-image: radial-gradient(circle, rgba(95, 133, 101, .62) 1.5px, transparent 1.6px);
+  }
+}
+
 html[data-theme="light"] .hero-overlay {
   background-image:
     radial-gradient(ellipse at 82% 55%, rgba(83, 106, 132, .04), transparent 49%),
