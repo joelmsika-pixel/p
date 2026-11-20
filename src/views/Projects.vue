@@ -22,6 +22,8 @@ import biashara1 from '../assets/B1.jpg'
 import biashara2 from '../assets/B2.jpg'
 import biashara3 from '../assets/B3.jpg'
 import biashara4 from '../assets/B4.jpg'
+import ek1 from '../assets/ek1.png'
+import ek2 from '../assets/ek2.png'
 
 const ecommerceSlides = [
   { src: eshop1, alt: 'Eshop homepage screenshot' },
@@ -46,6 +48,11 @@ const biasharaSlides = [
   { src: biashara2, alt: 'Biashara Manager screenshot 2' },
   { src: biashara3, alt: 'Biashara Manager screenshot 3' },
   { src: biashara4, alt: 'Biashara Manager screenshot 4' },
+]
+
+const eKikobaSlides = [
+  { src: ek1, alt: 'eKikoba money savings platform screenshot 1' },
+  { src: ek2, alt: 'eKikoba money savings platform screenshot 2' },
 ]
 
 const projects = [
@@ -102,15 +109,29 @@ const projects = [
     link: 'https://bizikua.vercel.app',
     linkLabel: 'Visit Bizikua',
   },
+  {
+    id: 5,
+    category: 'MONEY SAVINGS',
+    title: 'eKikoba Platform',
+    description: 'A money savings platform currently in development.',
+    skills: [
+      { name: 'Vue.js', icon: siVuedotjs },
+      { name: 'Tailwind CSS', icon: siTailwindcss },
+      { name: 'Laravel', icon: siLaravel },
+    ],
+    slides: eKikobaSlides,
+    link: 'https://ekikoba-mjp5.vercel.app/',
+    linkLabel: 'Visit eKikoba',
+  },
 ]
 
-const activeSlides = ref({ 1: 0, 2: 0, 3: 0, 4: 0 })
-const slidePositions = ref({ 1: 1, 2: 1, 3: 1, 4: 1 })
-const dragOffsets = ref({ 1: 0, 2: 0, 3: 0, 4: 0 })
-const slideTransitions = ref({ 1: true, 2: true, 3: true, 4: true })
-const pointerPaused = ref({ 1: false, 2: false, 3: false, 4: false })
-const focusPaused = ref({ 1: false, 2: false, 3: false, 4: false })
-const swipeActive = ref({ 1: false, 2: false, 3: false, 4: false })
+const activeSlides = ref(Object.fromEntries(projects.map(({ id }) => [id, 0])))
+const slidePositions = ref(Object.fromEntries(projects.map(({ id }) => [id, 1])))
+const dragOffsets = ref(Object.fromEntries(projects.map(({ id }) => [id, 0])))
+const slideTransitions = ref(Object.fromEntries(projects.map(({ id }) => [id, true])))
+const pointerPaused = ref(Object.fromEntries(projects.map(({ id }) => [id, false])))
+const focusPaused = ref(Object.fromEntries(projects.map(({ id }) => [id, false])))
+const swipeActive = ref(Object.fromEntries(projects.map(({ id }) => [id, false])))
 const slideshowTimers = new Map()
 const transitionResetFrames = new Map()
 const swipeStartX = new Map()
