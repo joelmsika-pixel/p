@@ -17,7 +17,15 @@
   width: 3px;
   height: 3px;
   border-radius: 50%;
-  background-color: rgba(151, 170, 191, .48);
+  background-color: rgba(175, 184, 190, .56);
+}
+
+.hero-mesh-dot:nth-child(7n) {
+  background-color: rgba(161, 185, 164, .72);
+}
+
+.hero-mesh-dot:nth-child(11n) {
+  background-color: rgba(112, 148, 189, .72);
 }
 
 .hero-mesh-dot:nth-child(50n + 26) {
@@ -26,7 +34,7 @@
 }
 
 .mobile-navigation a[aria-current="page"] svg {
-  color: #7094bd;
+  color: #c5e3c9;
 }
 
 .section-surface {
@@ -81,7 +89,15 @@ html[data-theme="light"] .section-alt-surface {
 }
 
 html[data-theme="light"] .hero-mesh-dot {
-  background-color: rgba(83, 106, 132, .32);
+  background-color: rgba(97, 112, 123, .32);
+}
+
+html[data-theme="light"] .hero-mesh-dot:nth-child(7n) {
+  background-color: rgba(93, 132, 101, .42);
+}
+
+html[data-theme="light"] .hero-mesh-dot:nth-child(11n) {
+  background-color: rgba(73, 107, 148, .42);
 }
 
 html[data-theme="light"] .hero-overlay {
@@ -141,12 +157,16 @@ html[data-theme="light"] [class~="text-[#91a8c0]"] {
   color: #506984;
 }
 
-html[data-theme="light"] [class~="text-[#7094bd]"] {
-  color: #42658a;
+html[data-theme="light"] [class~="text-[#b4c9b5]"] {
+  color: #48664e;
+}
+
+html[data-theme="light"] [class~="text-[#c5e3c9]"] {
+  color: #3d6745;
 }
 
 html[data-theme="light"] .mobile-navigation a[aria-current="page"] svg {
-  color: #42658a;
+  color: #3d6745;
 }
 
 html[data-theme="light"] :is([class~="text-[#addb67]"], [class~="text-[#c792ea]"]) {

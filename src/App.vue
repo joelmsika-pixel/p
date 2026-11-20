@@ -109,8 +109,8 @@ onBeforeUnmount(() => {
           v-for="link in navigationLinks"
           :key="link.id"
           :to="`/#${link.id}`"
-          class="font-code text-xs font-medium leading-none text-[#a7b5ca] no-underline transition-colors duration-200 hover:text-[#91a8c0]"
-          :class="{ 'text-[#91a8c0]': activeSection === link.id }"
+          class="font-code text-xs font-medium leading-none text-[#a7b5ca] no-underline transition-colors duration-200 hover:text-[#b4c9b5]"
+          :class="{ 'text-[#c5e3c9]': activeSection === link.id }"
           :aria-current="activeSection === link.id ? 'page' : undefined"
         >{{ link.label }}</RouterLink>
       </nav>
@@ -158,8 +158,8 @@ onBeforeUnmount(() => {
         v-for="link in navigationLinks"
         :key="link.id"
         :to="`/#${link.id}`"
-        class="flex min-h-[76px] flex-col items-center justify-center gap-1 rounded-xl py-1 font-code text-[8px] leading-none text-[#a7b5ca] no-underline transition-colors duration-200 hover:text-[#91a8c0]"
-        :class="{ 'text-[#7094bd]': activeSection === link.id }"
+        class="flex min-h-[76px] flex-col items-center justify-center gap-1 rounded-xl py-1 font-code text-[8px] leading-none text-[#a7b5ca] no-underline transition-colors duration-200 hover:text-[#b4c9b5]"
+        :class="{ 'text-[#c5e3c9]': activeSection === link.id }"
         :aria-label="link.label"
         :title="link.label"
         :aria-current="activeSection === link.id ? 'page' : undefined"
