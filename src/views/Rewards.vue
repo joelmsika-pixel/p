@@ -1,4 +1,6 @@
 <script setup>
+import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
 import agentsCertificate from '../assets/Screenshot 2026-11-20 201020.png'
 import aiCertificate from '../assets/Screenshot 2026-11-20 201102.png'
 import dataScienceCertificate from '../assets/Screenshot 2026-11-20 201138.png'
@@ -6,6 +8,13 @@ import digitalMarketingCertificate from '../assets/Screenshot 2026-11-20 201205.
 import machineLearningCertificate from '../assets/Screenshot 2026-11-20 201242.png'
 import pythonCertificate from '../assets/Screenshot 2026-11-20 201311.png'
 import chatGptCertificate from '../assets/Screenshot 2026-11-20 201334.png'
+
+const props = defineProps({
+  preview: {
+    type: Boolean,
+    default: false,
+  },
+})
 
 const certificates = [
   {
@@ -51,6 +60,10 @@ const certificates = [
     image: chatGptCertificate,
   },
 ]
+
+const visibleCertificates = computed(() => (
+  props.preview ? certificates.slice(0, 3) : certificates
+))
 </script>
 
 <template>
@@ -64,7 +77,7 @@ const certificates = [
       <h2 id="rewards-title" class="m-0 text-[clamp(24px,3vw,36px)] font-semibold leading-[1.08] tracking-[-.055em] text-[#8193ad]"><span class="font-normal" aria-hidden="true">// </span>Rewards</h2>
       <p class="mt-5 max-w-[650px] text-sm leading-[1.85] text-[#a7b5ca]">Certificates of achievement in artificial intelligence, data science, programming, and digital marketing.</p>
       <ul class="mt-9 grid list-none grid-cols-3 gap-4 p-0 max-[900px]:grid-cols-2 max-[640px]:mt-7 max-[640px]:grid-cols-1">
-        <li v-for="(certificate, index) in certificates" :key="certificate.title">
+        <li v-for="(certificate, index) in visibleCertificates" :key="certificate.title">
           <article class="reward-card h-full">
             <div class="mb-5 flex items-center justify-between gap-3">
               <span class="reward-index">CERTIFICATE 0{{ index + 1 }}</span>
@@ -87,6 +100,16 @@ const certificates = [
           </article>
         </li>
       </ul>
+      <RouterLink
+        v-if="preview"
+        to="/rewards"
+        class="project-visit-link mt-7 inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold"
+      >
+        View all awards
+        <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M5 12h14m-6-6 6 6-6 6" />
+        </svg>
+      </RouterLink>
     </div>
   </section>
 </template>

@@ -103,7 +103,7 @@ onBeforeUnmount(() => introContext?.revert())
     <MySkills />
     <Projects />
     <Testimonials />
-    <Rewards />
+    <Rewards preview />
     <Contact />
   </main>
 </template>

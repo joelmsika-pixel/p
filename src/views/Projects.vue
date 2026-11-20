@@ -101,37 +101,66 @@ const projects = [
 ]
 
 const activeSlides = ref({ 1: 0, 2: 0, 3: 0, 4: 0 })
-const slideDirections = ref({ 1: 1, 2: 1, 3: 1, 4: 1 })
+const slidePositions = ref({ 1: 1, 2: 1, 3: 1, 4: 1 })
+const dragOffsets = ref({ 1: 0, 2: 0, 3: 0, 4: 0 })
+const slideTransitions = ref({ 1: true, 2: true, 3: true, 4: true })
 const pointerPaused = ref({ 1: false, 2: false, 3: false, 4: false })
 const focusPaused = ref({ 1: false, 2: false, 3: false, 4: false })
 const swipeActive = ref({ 1: false, 2: false, 3: false, 4: false })
 const slideshowTimers = new Map()
+const transitionResetFrames = new Map()
 const swipeStartX = new Map()
 
-function setActiveSlide(projectId, index, direction) {
+const loopedProjectSlides = Object.fromEntries(projects.map(({ id, slides }) => [
+  id,
+  [slides[slides.length - 1], ...slides, slides[0]],
+]))
+
+function setActiveSlide(projectId, index) {
   const project = projects.find(({ id }) => id === projectId)
   const currentIndex = activeSlides.value[projectId]
   if (index === currentIndex) return
 
-  if (direction === undefined) {
-    const difference = index - currentIndex
-    direction = Math.abs(difference) <= project.slides.length / 2
-      ? Math.sign(difference)
-      : -Math.sign(difference)
+  if (index === 0 && currentIndex === project.slides.length - 1) {
+    slidePositions.value[projectId] = project.slides.length + 1
+  } else if (index === project.slides.length - 1 && currentIndex === 0) {
+    slidePositions.value[projectId] = 0
+  } else {
+    slidePositions.value[projectId] = index + 1
   }
-
-  slideDirections.value[projectId] = direction
+  dragOffsets.value[projectId] = 0
   activeSlides.value[projectId] = index
 }
 
 function showNextSlide(projectId) {
   const project = projects.find(({ id }) => id === projectId)
-  setActiveSlide(projectId, (activeSlides.value[projectId] + 1) % project.slides.length, 1)
+  setActiveSlide(projectId, (activeSlides.value[projectId] + 1) % project.slides.length)
 }
 
 function showPreviousSlide(projectId) {
   const project = projects.find(({ id }) => id === projectId)
-  setActiveSlide(projectId, (activeSlides.value[projectId] - 1 + project.slides.length) % project.slides.length, -1)
+  setActiveSlide(projectId, (activeSlides.value[projectId] - 1 + project.slides.length) % project.slides.length)
+}
+
+function finishSlideLoop(projectId, event) {
+  if (event.propertyName !== 'transform') return
+
+  const project = projects.find(({ id }) => id === projectId)
+  if (slidePositions.value[projectId] === project.slides.length + 1 && activeSlides.value[projectId] === 0) {
+    slideTransitions.value[projectId] = false
+    slidePositions.value[projectId] = 1
+  } else if (slidePositions.value[projectId] === 0 && activeSlides.value[projectId] === project.slides.length - 1) {
+    slideTransitions.value[projectId] = false
+    slidePositions.value[projectId] = project.slides.length
+  } else {
+    return
+  }
+
+  window.cancelAnimationFrame(transitionResetFrames.get(projectId))
+  transitionResetFrames.set(projectId, window.requestAnimationFrame(() => {
+    slideTransitions.value[projectId] = true
+    transitionResetFrames.delete(projectId)
+  }))
 }
 
 function updateSlideshow(projectId) {
@@ -173,9 +202,17 @@ function startSlideSwipe(projectId, event) {
   if (!event.isPrimary || (event.pointerType === 'mouse' && event.button !== 0)) return
 
   swipeStartX.set(projectId, event.clientX)
+  dragOffsets.value[projectId] = 0
   swipeActive.value[projectId] = true
   updateSlideshow(projectId)
   event.currentTarget.setPointerCapture(event.pointerId)
+}
+
+function moveSlideSwipe(projectId, event) {
+  const startX = swipeStartX.get(projectId)
+  if (startX === undefined) return
+
+  dragOffsets.value[projectId] = event.clientX - startX
 }
 
 function finishSlideSwipe(projectId, event) {
@@ -189,6 +226,7 @@ function finishSlideSwipe(projectId, event) {
     else showPreviousSlide(projectId)
   }
 
+  dragOffsets.value[projectId] = 0
   swipeActive.value[projectId] = false
   updateSlideshow(projectId)
 }
@@ -197,12 +235,16 @@ function cancelSlideSwipe(projectId) {
   if (!swipeStartX.has(projectId)) return
 
   swipeStartX.delete(projectId)
+  dragOffsets.value[projectId] = 0
   swipeActive.value[projectId] = false
   updateSlideshow(projectId)
 }
 
 onMounted(() => projects.filter(({ slides }) => slides).forEach(({ id }) => updateSlideshow(id)))
-onBeforeUnmount(() => slideshowTimers.forEach(timer => window.clearInterval(timer)))
+onBeforeUnmount(() => {
+  slideshowTimers.forEach(timer => window.clearInterval(timer))
+  transitionResetFrames.forEach(frame => window.cancelAnimationFrame(frame))
+})
 </script>
 
 <template>
@@ -231,26 +273,36 @@ onBeforeUnmount(() => slideshowTimers.forEach(timer => window.clearInterval(time
             aria-roledescription="carousel"
             :aria-label="`${project.title} screenshots`"
             @pointerdown="startSlideSwipe(project.id, $event)"
+            @pointermove="moveSlideSwipe(project.id, $event)"
             @pointerup="finishSlideSwipe(project.id, $event)"
             @pointercancel="cancelSlideSwipe(project.id)"
             @lostpointercapture="cancelSlideSwipe(project.id)"
           >
-            <Transition :name="slideDirections[project.id] > 0 ? 'project-slide-forward' : 'project-slide-backward'">
+            <div
+              class="project-slideshow-track"
+              :class="{
+                'project-slideshow-track--instant': !slideTransitions[project.id],
+                'project-slideshow-track--dragging': swipeActive[project.id],
+              }"
+              :style="{ transform: `translate3d(calc(-${slidePositions[project.id] * 100}% + ${dragOffsets[project.id]}px), 0, 0)` }"
+              @transitionend="finishSlideLoop(project.id, $event)"
+            >
               <img
-                :key="activeSlides[project.id]"
-                :src="project.slides[activeSlides[project.id]].src"
-                :alt="project.slides[activeSlides[project.id]].alt"
-                class="absolute inset-0 size-full object-cover object-[center_72%]"
-                loading="lazy"
-                decoding="async"
-                fetchpriority="low"
+                v-for="(slide, index) in loopedProjectSlides[project.id]"
+                :key="`${index}-${slide.src}`"
+                :src="slide.src"
+                :alt="index === slidePositions[project.id] ? slide.alt : ''"
+                :aria-hidden="index !== slidePositions[project.id]"
+                class="project-slideshow-image"
+                loading="eager"
                 draggable="false"
               />
-            </Transition>
+            </div>
             <button
               type="button"
               class="project-slide-control absolute left-3 top-1/2 z-10 grid size-9 -translate-y-1/2 place-items-center rounded-full"
               :aria-label="`Previous ${project.title} screenshot`"
+              @pointerdown.stop
               @click="showPreviousSlide(project.id)"
             >
               <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -261,6 +313,7 @@ onBeforeUnmount(() => slideshowTimers.forEach(timer => window.clearInterval(time
               type="button"
               class="project-slide-control absolute right-3 top-1/2 z-10 grid size-9 -translate-y-1/2 place-items-center rounded-full"
               :aria-label="`Next ${project.title} screenshot`"
+              @pointerdown.stop
               @click="showNextSlide(project.id)"
             >
               <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">

@@ -112,6 +112,27 @@ html[data-theme="light"] .social-link--github .social-icon {
   cursor: grab;
 }
 
+.project-slideshow-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform .6s cubic-bezier(.25, .1, .25, 1);
+  will-change: transform;
+}
+
+.project-slideshow-track--instant,
+.project-slideshow-track--dragging {
+  transition: none;
+}
+
+.project-slideshow-image {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 72%;
+}
+
 .project-slideshow:active {
   cursor: grabbing;
 }
@@ -554,30 +575,6 @@ html[data-theme="light"] .skills-brand-icon--contrast {
   color: #171717;
 }
 
-.project-slide-forward-enter-active,
-.project-slide-forward-leave-active,
-.project-slide-backward-enter-active,
-.project-slide-backward-leave-active {
-  transition: transform .42s cubic-bezier(.22, .61, .36, 1);
-  will-change: transform;
-}
-
-.project-slide-forward-enter-from {
-  transform: translateX(100%);
-}
-
-.project-slide-forward-leave-to {
-  transform: translateX(-100%);
-}
-
-.project-slide-backward-enter-from {
-  transform: translateX(-100%);
-}
-
-.project-slide-backward-leave-to {
-  transform: translateX(100%);
-}
-
 .project-slide-control {
   border: 1px solid rgba(255, 255, 255, .24);
   background: rgba(7, 16, 31, .76);
@@ -614,10 +611,7 @@ html[data-theme="light"] .project-slide-indicator[aria-pressed="true"] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .project-slide-forward-enter-active,
-  .project-slide-forward-leave-active,
-  .project-slide-backward-enter-active,
-  .project-slide-backward-leave-active {
+  .project-slideshow-track {
     transition: none;
   }
 }
