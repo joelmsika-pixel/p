@@ -1,54 +1,54 @@
 <script setup>
-import agentsCertificate from '../assets/Certificate Basics of Agents & Environments in AI.pdf'
-import aiCertificate from '../assets/Certificate Basics of Artificial Intelligence.pdf'
-import dataScienceCertificate from '../assets/Certificate Basics of Data Science.pdf'
-import digitalMarketingCertificate from '../assets/Certificate Basics of Digital Marketing.pdf'
-import machineLearningCertificate from '../assets/Certificate Basics of Machine Learning Algorithms.pdf'
-import pythonCertificate from '../assets/Certificate Basics of Python Programming.pdf'
-import chatGptCertificate from '../assets/Certificate Master ChatGPT.pdf'
+import agentsCertificate from '../assets/Screenshot 2026-11-20 201020.png'
+import aiCertificate from '../assets/Screenshot 2026-11-20 201102.png'
+import dataScienceCertificate from '../assets/Screenshot 2026-11-20 201138.png'
+import digitalMarketingCertificate from '../assets/Screenshot 2026-11-20 201205.png'
+import machineLearningCertificate from '../assets/Screenshot 2026-11-20 201242.png'
+import pythonCertificate from '../assets/Screenshot 2026-11-20 201311.png'
+import chatGptCertificate from '../assets/Screenshot 2026-11-20 201334.png'
 
 const certificates = [
   {
     title: 'Basics of Agents & Environments in AI',
     description: 'Explored AI agents, their environments, and how they interact.',
     issuer: 'UniAthena · Cambridge International Qualifications, UK',
-    file: agentsCertificate,
+    image: agentsCertificate,
   },
   {
     title: 'Basics of Artificial Intelligence',
     description: 'Built a foundation in core artificial intelligence concepts.',
     issuer: 'UniAthena · Cambridge International Qualifications, UK',
-    file: aiCertificate,
+    image: aiCertificate,
   },
   {
     title: 'Basics of Data Science',
     description: 'Learned foundational data science and data analysis concepts.',
     issuer: 'UniAthena · Cambridge International Qualifications, UK',
-    file: dataScienceCertificate,
+    image: dataScienceCertificate,
   },
   {
     title: 'Basics of Digital Marketing',
     description: 'Covered core digital marketing and online promotion concepts.',
     issuer: 'UniAthena · Cambridge International Qualifications, UK',
-    file: digitalMarketingCertificate,
+    image: digitalMarketingCertificate,
   },
   {
     title: 'Basics of Machine Learning Algorithms',
     description: 'Studied algorithms that help systems learn patterns from data.',
     issuer: 'UniAthena · Cambridge International Qualifications, UK',
-    file: machineLearningCertificate,
+    image: machineLearningCertificate,
   },
   {
     title: 'Basics of Python Programming',
     description: 'Developed foundational programming skills using Python.',
     issuer: 'UniAthena · Cambridge International Qualifications, UK',
-    file: pythonCertificate,
+    image: pythonCertificate,
   },
   {
     title: 'Master ChatGPT',
     description: 'Completed training on ChatGPT and its practical applications.',
     issuer: 'UniAthena',
-    file: chatGptCertificate,
+    image: chatGptCertificate,
   },
 ]
 </script>
@@ -73,22 +73,17 @@ const certificates = [
                 <path d="m8.5 12-1 9 4.5-2.5 4.5 2.5-1-9M12 5.5l.8 1.6 1.7.2-1.2 1.2.3 1.7-1.6-.8-1.6.8.3-1.7-1.2-1.2 1.7-.2L12 5.5Z" />
               </svg>
             </div>
+            <img
+              v-if="certificate.image"
+              :src="certificate.image"
+              :alt="`${certificate.title} certificate`"
+              class="reward-certificate-image mb-5"
+              loading="lazy"
+            />
             <h3 class="reward-title">{{ certificate.title }}</h3>
             <p class="reward-description">{{ certificate.description }}</p>
             <p class="reward-date">Completed 17 November 2026</p>
             <p class="reward-issuer">{{ certificate.issuer }}</p>
-            <a
-              :href="certificate.file"
-              target="_blank"
-              rel="noopener noreferrer"
-              :aria-label="`View ${certificate.title} certificate (opens in a new tab)`"
-              class="reward-link mt-5 inline-flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold"
-            >
-              View certificate
-              <svg viewBox="0 0 24 24" class="size-3.5" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path d="M14 4h6v6m-11 5L20 4M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6" />
-              </svg>
-            </a>
           </article>
         </li>
       </ul>

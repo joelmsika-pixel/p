@@ -101,15 +101,37 @@ const projects = [
 ]
 
 const activeSlides = ref({ 1: 0, 2: 0, 3: 0, 4: 0 })
+const slideDirections = ref({ 1: 1, 2: 1, 3: 1, 4: 1 })
 const pointerPaused = ref({ 1: false, 2: false, 3: false, 4: false })
 const focusPaused = ref({ 1: false, 2: false, 3: false, 4: false })
 const swipeActive = ref({ 1: false, 2: false, 3: false, 4: false })
 const slideshowTimers = new Map()
 const swipeStartX = new Map()
 
+function setActiveSlide(projectId, index, direction) {
+  const project = projects.find(({ id }) => id === projectId)
+  const currentIndex = activeSlides.value[projectId]
+  if (index === currentIndex) return
+
+  if (direction === undefined) {
+    const difference = index - currentIndex
+    direction = Math.abs(difference) <= project.slides.length / 2
+      ? Math.sign(difference)
+      : -Math.sign(difference)
+  }
+
+  slideDirections.value[projectId] = direction
+  activeSlides.value[projectId] = index
+}
+
 function showNextSlide(projectId) {
   const project = projects.find(({ id }) => id === projectId)
-  activeSlides.value[projectId] = (activeSlides.value[projectId] + 1) % project.slides.length
+  setActiveSlide(projectId, (activeSlides.value[projectId] + 1) % project.slides.length, 1)
+}
+
+function showPreviousSlide(projectId) {
+  const project = projects.find(({ id }) => id === projectId)
+  setActiveSlide(projectId, (activeSlides.value[projectId] - 1 + project.slides.length) % project.slides.length, -1)
 }
 
 function updateSlideshow(projectId) {
@@ -163,9 +185,8 @@ function finishSlideSwipe(projectId, event) {
   swipeStartX.delete(projectId)
   const deltaX = event.clientX - startX
   if (Math.abs(deltaX) >= 48) {
-    const project = projects.find(({ id }) => id === projectId)
-    const direction = deltaX < 0 ? 1 : -1
-    activeSlides.value[projectId] = (activeSlides.value[projectId] + direction + project.slides.length) % project.slides.length
+    if (deltaX < 0) showNextSlide(projectId)
+    else showPreviousSlide(projectId)
   }
 
   swipeActive.value[projectId] = false
@@ -214,7 +235,7 @@ onBeforeUnmount(() => slideshowTimers.forEach(timer => window.clearInterval(time
             @pointercancel="cancelSlideSwipe(project.id)"
             @lostpointercapture="cancelSlideSwipe(project.id)"
           >
-            <Transition name="project-slide">
+            <Transition :name="slideDirections[project.id] > 0 ? 'project-slide-forward' : 'project-slide-backward'">
               <img
                 :key="activeSlides[project.id]"
                 :src="project.slides[activeSlides[project.id]].src"
@@ -226,6 +247,26 @@ onBeforeUnmount(() => slideshowTimers.forEach(timer => window.clearInterval(time
                 draggable="false"
               />
             </Transition>
+            <button
+              type="button"
+              class="project-slide-control absolute left-3 top-1/2 z-10 grid size-9 -translate-y-1/2 place-items-center rounded-full"
+              :aria-label="`Previous ${project.title} screenshot`"
+              @click="showPreviousSlide(project.id)"
+            >
+              <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              class="project-slide-control absolute right-3 top-1/2 z-10 grid size-9 -translate-y-1/2 place-items-center rounded-full"
+              :aria-label="`Next ${project.title} screenshot`"
+              @click="showNextSlide(project.id)"
+            >
+              <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
           </div>
           <div v-else class="project-art relative grid aspect-[2.23/1] place-items-center overflow-hidden" aria-hidden="true">
             <span class="absolute left-4 top-4 font-code text-[10px] tracking-wide text-[rgba(143,166,192,0.7)]">{{ project.file }}</span>
@@ -243,7 +284,7 @@ onBeforeUnmount(() => slideshowTimers.forEach(timer => window.clearInterval(time
                   :class="index === activeSlides[project.id] ? 'w-5' : 'w-2'"
                   :aria-label="`Show screenshot ${index + 1}`"
                   :aria-pressed="index === activeSlides[project.id]"
-                  @click="activeSlides[project.id] = index"
+                  @click="setActiveSlide(project.id, index)"
                 ></button>
               </div>
               <span v-else class="project-category">{{ project.category }}</span>
