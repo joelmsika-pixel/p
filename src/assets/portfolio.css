@@ -255,3 +255,56 @@ html[data-theme="light"] :is(
     animation: none;
   }
 }
+
+.skills-overview {
+  border: 1px solid rgba(114, 151, 196, .2);
+  background: linear-gradient(110deg, rgba(20, 39, 62, .8), rgba(11, 24, 41, .72));
+}
+
+.skills-card {
+  border: 1px solid rgba(114, 151, 196, .18);
+  background: linear-gradient(145deg, rgba(17, 33, 54, .88), rgba(9, 20, 35, .9));
+  box-shadow: 0 7px 18px rgba(0, 0, 0, .13);
+}
+
+.skills-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(143, 166, 192, .38);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .19);
+}
+
+.skills-chip {
+  border: 1px solid rgba(143, 166, 192, .16);
+  background: rgba(143, 166, 192, .07);
+  color: #a7b5ca;
+}
+
+.skills-brand-icon--contrast {
+  color: #f4f7ff;
+}
+
+html[data-theme="light"] .skills-overview {
+  border-color: rgba(64, 88, 68, .2);
+  background: linear-gradient(110deg, #f8faf6, #edf2eb);
+}
+
+html[data-theme="light"] .skills-card {
+  border-color: rgba(64, 88, 68, .18);
+  background: linear-gradient(145deg, #fbfcf9, #f0f4ee);
+  box-shadow: 0 6px 16px rgba(40, 58, 42, .07);
+}
+
+html[data-theme="light"] .skills-card:hover {
+  border-color: rgba(64, 88, 68, .34);
+  box-shadow: 0 9px 22px rgba(40, 58, 42, .12);
+}
+
+html[data-theme="light"] .skills-chip {
+  border-color: rgba(64, 88, 68, .14);
+  background: rgba(64, 88, 68, .055);
+  color: #45574a;
+}
+
+html[data-theme="light"] .skills-brand-icon--contrast {
+  color: #171717;
+}
