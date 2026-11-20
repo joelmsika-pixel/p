@@ -342,14 +342,14 @@ onBeforeUnmount(() => {
       </button>
     </header>
     <nav
-      class="mobile-navigation fixed bottom-0 left-0 z-30 hidden w-full grid-cols-7 items-stretch gap-1 border-t border-[rgba(143,177,225,0.18)] bg-[rgba(7,16,31,0.98)] px-1 pt-1 pb-[calc(6px+env(safe-area-inset-bottom))] shadow-[0_-8px_24px_rgba(0,0,0,0.2)] backdrop-blur-[18px] max-[640px]:grid"
+      class="mobile-navigation fixed bottom-0 left-0 z-30 hidden w-screen grid-cols-5 items-stretch gap-1 border-t border-[rgba(143,177,225,0.18)] bg-[rgba(7,16,31,0.98)] px-1 pt-1 pb-[calc(6px+env(safe-area-inset-bottom))] shadow-[0_-8px_24px_rgba(0,0,0,0.2)] backdrop-blur-[18px] max-[640px]:grid"
       aria-label="Mobile navigation"
     >
       <RouterLink
         v-for="link in navigationLinks"
         :key="link.id"
         :to="`/#${link.id}`"
-        class="flex min-h-[76px] flex-col items-center justify-center gap-1 rounded-xl py-1 font-code text-[8px] leading-none text-[#a7b5ca] no-underline"
+        class="flex min-h-[68px] flex-col items-center justify-center gap-1 rounded-xl py-1 font-code text-[9px] leading-none text-[#a7b5ca] no-underline"
         :class="{ 'text-[#c5e3c9]': activeSection === link.id }"
         :aria-label="link.label"
         :title="link.label"
@@ -362,7 +362,7 @@ onBeforeUnmount(() => {
       >
         <svg
           v-if="link.id === 'home'"
-          class="size-[26px]"
+          class="size-6"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -375,7 +375,7 @@ onBeforeUnmount(() => {
         </svg>
         <svg
           v-else-if="link.id === 'me'"
-          class="size-[26px]"
+          class="size-6"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -389,7 +389,7 @@ onBeforeUnmount(() => {
         </svg>
         <svg
           v-else-if="link.id === 'my-skills'"
-          class="size-[26px]"
+          class="size-6"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -402,7 +402,7 @@ onBeforeUnmount(() => {
         </svg>
         <svg
           v-else-if="link.id === 'projects'"
-          class="size-[26px]"
+          class="size-6"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -415,7 +415,7 @@ onBeforeUnmount(() => {
         </svg>
         <svg
           v-else-if="link.id === 'rewards'"
-          class="size-[26px]"
+          class="size-6"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -429,7 +429,7 @@ onBeforeUnmount(() => {
         </svg>
         <svg
           v-else
-          class="size-[26px]"
+          class="size-6"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
