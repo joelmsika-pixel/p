@@ -158,7 +158,7 @@ onBeforeUnmount(() => {
         v-for="link in navigationLinks"
         :key="link.id"
         :to="`/#${link.id}`"
-        class="flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl py-1 font-code text-[8px] leading-none text-[#a7b5ca] no-underline transition-colors duration-200 hover:text-[#75b2ff]"
+        class="flex min-h-16 flex-col items-center justify-center gap-1 rounded-xl py-1 font-code text-[8px] leading-none text-[#a7b5ca] no-underline transition-colors duration-200 hover:text-[#75b2ff]"
         :class="{ 'bg-[rgba(62,132,220,0.12)] text-[#75b2ff]': activeSection === link.id }"
         :aria-label="link.label"
         :title="link.label"
